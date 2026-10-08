@@ -54,6 +54,20 @@ participant-facing network.
 The challenge environments will remain logically separated from the
 CTFd infrastructure.
 
+### Dedicated Challenge Network
+
+A dedicated Docker bridge network named `zobi_challenges` is used for
+containerized challenge environments.
+
+- Network: zobi_challenges
+- Driver: bridge
+- Subnet: 172.20.0.0/24
+- Gateway: 172.20.0.1
+- Current containers: none
+
+The challenge network is kept separate from the CTFd participant-facing
+network (`ctfd_default`) and the CTFd internal network (`ctfd_internal`).
+
 ### File-Based Challenges
 
 - C1 - Steganography
