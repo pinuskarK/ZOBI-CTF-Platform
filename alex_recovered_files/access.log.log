@@ -1,0 +1,22 @@
+ACCESS LOG
+Workstation: DR-ALEX-PC
+
+-----
+2026-09-18 08:54:12 | USER: alex    | EVENT: Workstation login successful
+2026-09-18 08:56:41 | USER: alex    | EVENT: Research notes opened
+2026-09-18 09:03:27 | USER: alex    | EVENT: File accessed: cure_research_notes.txt
+2026-09-18 09:12:08 | USER: alex    | EVENT: Research directory accessed
+2026-09-18 09:18:44 | USER: alex    | EVENT: File accessed: patient_observations.csv
+2026-09-18 09:25:19 | USER: alex    | EVENT: File accessed: cure_research.zip
+2026-09-18 09:31:52 | USER: alex    | EVENT: Research directory closed
+2026-09-18 09:38:07 | USER: alex    | EVENT: Workstation idle
+2026-09-18 09:42:17 | USER: unknown | EVENT: Unusual access to research directory detected
+2026-09-18 09:43:06 | USER: unknown | EVENT: Multiple research files accessed
+2026-09-18 09:45:02 | USER: alex    | EVENT: USB storage device connected
+2026-09-18 09:46:11 | USER: unknown | EVENT: File accessed: cure_research.zip
+2026-09-18 09:47:20 | USER: unknown | EVENT: File accessed: research_backup.zip
+2026-09-18 09:48:03 | USER: unknown | EVENT: File accessed: cure_research_notes.txt
+2026-09-18 09:48:30 | USER: unknown | EVENT: File accessed: cure.txt
+2026-09-18 09:49:47 | USER: unknown | EVENT: File accessed: patient_observations.csv
+2026-09-18 09:50:03 | USER: system  | EVENT: USB storage device removed
+-----
