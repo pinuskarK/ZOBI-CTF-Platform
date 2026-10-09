@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "zobi-c3-development-only")
 
 DB_PATH = "/app/data/research.db"
-FLAG = os.environ.get("C3_FLAG", "ZOBI{c3_temporary_development_flag}")
+FLAG = os.environ.get("C3_FLAG", "ZOBI{abandoned_lab_archive_7f3c9a2d}")
 
 LOGIN_PAGE = """
 <!doctype html>
