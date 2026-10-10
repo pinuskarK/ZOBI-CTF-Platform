@@ -1,58 +1,75 @@
 # Member 4 — Integration, Testing & Documentation
 
-This folder contains the integration evidence and repeatable test plan for the ZOBI CTF Play Box.
+This folder contains the integration plan, test results register, reset/recovery runbook, risk register, and design-change comparison for the ZOBI CTF Play Box.
 
-## Assignment 02 responsibilities
+## Current status
 
-Member 4 is responsible for demonstrating and documenting:
+- **Reported complete:** C1 Steganography, C2 Cryptography, C3 Web Security, C4 Digital Forensics, and C6 Linux/System Security.
+- **Not finished:** C5 Network Analysis.
+- **Overall end-to-end acceptance:** Pending C5. Do not describe the full C1-to-C6 sequence as complete until a clean participant account has followed the intended path through all six stages.
 
-- The complete C1 → C6 pathway, including dependencies and flag progression.
-- Test cases, observed results, defects found/fixed, and checks for unintended shortcuts.
-- Reset/recovery behaviour and risk-register outcomes.
-- Changes from the Assignment 01 design, with a justification for each change.
+The stage statuses above reflect the current project update. The documents distinguish implementation status from independently captured acceptance evidence.
 
-## Current implementation context
+## Member 4 responsibilities
 
-The repository describes six stages:
+1. Integrate the six challenge stages and confirm dependencies and flag progression.
+2. Maintain test cases, actual results, defects, fixes and retest evidence.
+3. Test reset/recovery behaviour and update the risk register with evidence-based outcomes.
+4. Compare the approved Assignment 01 design with the deployed implementation and justify deviations.
+5. Keep setup, execution and recovery documentation aligned with the actual lab.
 
-| Stage | Domain | Known access/dependency |
-|---|---|---|
-| C1 | Steganography | File-based challenge |
-| C2 | Cryptography | File-based challenge |
-| C3 | Web security | Web challenge at `http://192.168.8.188:5003` in the current lab setup |
-| C4 | Digital forensics | File-based challenge |
-| C5 | Networking | Should provide the intended connection details for C6 |
-| C6 | Linux/system security | SSH target documented in the lab notes as `10.10.20.50` |
+## Documents in this folder
 
-These addresses are environment-specific. Confirm them on the actual running box before recording the demonstration. Do not commit real credentials or live flags.
+| File | Purpose |
+|---|---|
+| INTEGRATION_TEST_PLAN.md | End-to-end acceptance plan, negative tests, C5 completion gate and reset checks |
+| TEST_RESULTS.md | Stage-by-stage implementation status, known observations, evidence checklist and blocker log |
+| RESET-RECOVERY.md | Safe recovery procedures and execution record |
+| RISK-REGISTER.md | Integration/security/recovery risks and required verification |
+| DESIGN-CHANGES.md | Comparison of intended architecture and implementation details |
 
-## Run the lightweight checks
+## Stage summary
 
-From the repository root:
+| Stage | Domain | Intended path | Status |
+|---|---|---|---|
+| C1 | Steganography | Extract a hidden note from the mystery photograph using Steghide | Reported complete |
+| C2 | Cryptography | Decode the Caesar-shifted message and follow its clue | Reported complete |
+| C3 | Web security | Solve the intentionally vulnerable Flask Research Portal challenge | Reported complete |
+| C4 | Digital forensics | Analyse the provided forensic evidence archive | Reported complete |
+| C5 | Network analysis | Analyse the PCAP to find the intended clue for C6 | Not finished |
+| C6 | Linux/system security | Complete the Linux challenge on the isolated Ubuntu VM through the intended path | Reported complete; C5 handoff pending |
 
-```bash
-python3 scripts/testing/smoke_test.py
-```
+## Run the non-destructive HTTP smoke test
+
+From the repository root, run:
+
+    python3 scripts/testing/smoke_test.py
+
+Defaults:
+- Flag API: http://127.0.0.1:8080/
+- C3 health endpoint: http://192.168.8.188:5003/health
 
 Optional environment variables:
+- ZOBI_FLAG_API_URL — Flag API base URL
+- ZOBI_C3_URL — C3 base URL
+- ZOBI_CTFD_URL — if set, also check CTFd
+- ZOBI_HTTP_TIMEOUT — request timeout in seconds
 
-- `ZOBI_FLAG_API_URL`: flag API base URL (default `http://127.0.0.1:8080`)
-- `ZOBI_C3_URL`: C3 URL (default `http://192.168.8.188:5003`)
-- `ZOBI_CTFD_URL`: CTFd base URL; omitted unless supplied
-- `ZOBI_C6_HOST`: C6 SSH host; default `10.10.20.50`
-- `ZOBI_C6_PORT`: SSH port; default `22`
+Example:
 
-The smoke test only checks service reachability. It does not submit flags, exploit challenges, authenticate to SSH, or prove the full flag chain. Complete the manual acceptance checklist below on the real box and record actual evidence.
+    ZOBI_CTFD_URL=http://127.0.0.1:8081 python3 scripts/testing/smoke_test.py
 
-## Evidence to collect
+This script checks HTTP reachability only. It does not submit flags, exploit challenges, log into SSH, validate reset procedures, or prove the full flag chain.
 
-Save timestamped screenshots or logs for:
+## Evidence required before final acceptance
 
-1. Each challenge opening and intended solve path.
-2. The flag validator accepting the correct flag and rejecting an incorrect one.
-3. The C5 → C6 dependency, proving C6 details are obtained through the intended path.
-4. Each reset/recovery operation and a post-reset retest.
-5. Failed/unavailable service tests, defects, fixes, and retest results.
-6. Repository commits identifying Member 4's contribution.
+- Screenshots of each stage and its intended solve path.
+- Accepted and rejected answer behaviour, with secrets redacted.
+- CTFd scoring/progression evidence.
+- PCAP solve evidence and C5-to-C6 handoff after C5 is finished.
+- Reset/recovery commands or snapshot names and post-recovery retest results.
+- Defect descriptions, fixes, commit references and retest evidence.
+- Sanitised live configuration showing ports, isolation and VM settings.
+- One complete clean-account C1-to-C6 run.
 
-Do not label a test PASS until it has been run against the actual deployment.
+Never put real credentials, tokens or live flags in public-facing docs or screenshots. Do not mark a test PASS until it has actually been executed and its evidence saved.
