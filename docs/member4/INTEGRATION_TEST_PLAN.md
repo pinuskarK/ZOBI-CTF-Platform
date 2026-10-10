@@ -1,89 +1,95 @@
 # ZOBI CTF — Integration and Acceptance Test Plan
 
 **Owner:** Member 4 — Integration, Testing & Documentation  
-**Environment:** Actual running ZOBI lab box  
-**Execution status:** Not yet executed by this document; fill in the evidence/results during testing.
+**Current status:** C1, C2, C3, C4 and C6 are reported complete by the project owner. C5 is unfinished. Therefore the complete C1-to-C6 acceptance run is blocked until C5 is finished.
 
-## 1. End-to-end stage flow
+## 1. Six-stage integration overview
 
-The expected learner journey is C1 → C2 → C3 → C4 → C5 → C6. Confirm the actual CTFd configuration and challenge descriptions match this sequence.
-
-| Test ID | Test / expected result | Evidence to capture | Result |
+| Stage | Domain | Intended learner task | Current status |
 |---|---|---|---|
-| E2E-01 | CTFd opens and all six stages are visible to the intended user | Browser screenshot and URL | NOT RUN |
-| E2E-02 | C1 opens and the intended steganography path reveals the next required clue/flag | Challenge screen and solve output | NOT RUN |
-| E2E-03 | C2 opens and the intended cryptographic solution works with the supplied artefacts | Challenge screen and solver output | NOT RUN |
-| E2E-04 | C3 web service is reachable and its intended vulnerability/solution works only as designed | Browser/dev-tools evidence | NOT RUN |
-| E2E-05 | C4 evidence artefact can be analysed using the intended forensic workflow | Commands and output | NOT RUN |
-| E2E-06 | C5 can be solved and yields only the intended C6 connection information | Challenge output; redact credentials | NOT RUN |
-| E2E-07 | C6 is reachable using the details obtained through C5, not by skipping the earlier stage | SSH connection evidence; redact secrets | NOT RUN |
-| E2E-08 | Flag submissions are accepted/rejected correctly and progress is recorded by CTFd/validator | Sanitised request/response screenshots | NOT RUN |
+| C1 | Steganography | Extract the hidden note from the supplied photograph with Steghide | Reported complete |
+| C2 | Cryptography | Decode the Caesar-shifted message and follow the resulting clue | Reported complete |
+| C3 | Web security | Use the intended SQL-injection path against the Flask Research Portal challenge | Reported complete |
+| C4 | Digital forensics | Analyse the supplied evidence archive and correlate the relevant logs | Reported complete |
+| C5 | Network analysis | Analyse the PCAP and identify the clue needed to continue to C6 | NOT FINISHED |
+| C6 | Linux/system security | Reach the isolated Ubuntu VM through the intended clue and complete the Linux privilege-escalation exercise | Reported complete; dependency handoff awaits C5 |
 
-## 2. Negative and unintended-shortcut checks
+The status labels above reflect the project owner's update. Attach live evidence before claiming each stage has been independently acceptance-tested.
 
-| Test ID | Check | Expected result | Result |
+## 2. Acceptance tests
+
+| Test ID | Procedure | Expected result | Current result |
 |---|---|---|---|
-| NEG-01 | Submit a clearly incorrect dummy flag | Rejected; no progress granted | NOT RUN |
-| NEG-02 | Attempt C6 using no C5 clue | No unintended shortcut; access remains controlled by the intended challenge design | NOT RUN |
-| NEG-03 | Inspect challenge files and public web responses for later-stage flags | Later-stage flags are not exposed early | NOT RUN |
-| NEG-04 | Access service ports from outside the intended lab/network boundary | Only explicitly required ports are reachable | NOT RUN |
-| NEG-05 | Restart the flag API and check health again | Service recovers and validation remains available | NOT RUN |
-| NEG-06 | Repeat an already accepted submission | Behaviour is consistent with the documented scoring configuration | NOT RUN |
+| INT-01 | Open CTFd as a participant | Portal loads and participant can sign in | Capture current evidence |
+| INT-02 | Open C1 and follow intended steganography path | Hidden note is recovered and correct answer is accepted | Reported complete; attach evidence |
+| INT-03 | Open C2 and decode supplied artefact | Decoded clue is meaningful and correct answer is accepted | Reported complete; attach evidence |
+| INT-04 | Open C3 and use intended SQLi path | Challenge behaves as designed and correct answer is accepted | Reported complete; attach evidence |
+| INT-05 | Download and analyse C4 evidence bundle | Intended forensic finding is reproducible and correct answer is accepted | Reported complete; attach evidence |
+| INT-06 | Open C5 and analyse its PCAP | Player obtains the intended clue without later-stage flags being exposed prematurely | BLOCKED — C5 unfinished |
+| INT-07 | Use clue from C5 to access C6 | Participant reaches the isolated VM through the intended path | BLOCKED — requires C5 |
+| INT-08 | Complete C6 task and submit answer | Validator accepts intended answer and records progress | C6 reported complete; end-to-end handoff pending |
+| INT-09 | Submit an incorrect dummy answer at each applicable stage | Incorrect answer is rejected and does not grant progress | Capture evidence |
+| INT-10 | Run C1 through C6 using a clean participant account | All stages work in sequence and completion state is recorded | BLOCKED — C5 unfinished |
+| INT-11 | Restart/recover each implemented service or VM using its approved procedure | Service returns to a healthy, known state without unintended loss of scores/data | Evidence pending |
+| INT-12 | Inspect files, web responses, CTFd settings and network exposure for shortcuts | No unintended early access to later-stage flags or services | Evidence pending |
 
-Perform tests only against the group's authorised lab environment.
+## 3. C5 completion gate
 
-## 3. Reset and recovery checks
+Do not close the following items until C5 is finished:
 
-| Test ID | Action | Expected result | Result |
+- [ ] Final PCAP artefact is in the agreed repository/location and attached to CTFd.
+- [ ] Intended network-analysis solve path is repeatable on a clean copy.
+- [ ] Resulting clue gives only the intended C6 connection information.
+- [ ] No C6 flag or unrelated secret is exposed in the PCAP description, download path, repository metadata, or public response.
+- [ ] A participant can follow C5 to C6 using the actual configured environment.
+- [ ] CTFd records the expected score/progression for C5.
+- [ ] Evidence is saved with secrets redacted.
+
+## 4. Negative and unintended-shortcut checks
+
+| Test ID | Check | Expected result | Status |
 |---|---|---|---|
-| REC-01 | Record initial state, then reset C1 | Challenge returns to documented initial state | NOT RUN |
-| REC-02 | Reset/restart each containerised stage (C1–C3) using its approved procedure | Service returns healthy; challenge artefacts are restored | NOT RUN |
-| REC-03 | Restore/revert VM-backed stages (C4–C6) using the documented snapshot/reset procedure | VM state and challenge artefacts return to baseline | NOT RUN |
-| REC-04 | Restart central flag API and CTFd dependencies | Services become available and validation still works | NOT RUN |
-| REC-05 | Run the end-to-end smoke test after reset | No new failures; expected stage sequence remains intact | NOT RUN |
+| NEG-01 | Submit an incorrect dummy flag | Rejected; no points or progress granted | Evidence pending |
+| NEG-02 | Try to obtain C6 details without solving C5 | No unintended shortcut; access follows intended design | Blocked until C5 is ready |
+| NEG-03 | Inspect challenge files and web responses for later-stage flags | Later-stage flags are not exposed early | Evidence pending |
+| NEG-04 | Check service bindings/firewall from an authorised test point | Only explicitly required ports are reachable | Evidence pending |
+| NEG-05 | Restart Flag API and check its health endpoint | Service recovers and remains available | Evidence pending |
+| NEG-06 | Repeat an accepted submission | Scoring behaviour matches documented CTFd settings | Evidence pending |
 
-Record the exact reset command or snapshot name used for each stage. Do not invent a reset procedure where one has not been implemented.
+Only perform these checks against the authorised project lab.
 
-## 4. Defect log
+## 5. Reset and recovery acceptance
 
-For every issue, record: ID, date/time, stage, expected behaviour, actual behaviour, severity, root cause, fix/commit, retest evidence, and final status.
+| Test ID | Action | Expected result | Status |
+|---|---|---|---|
+| REC-01 | Record initial state and execute documented C1 reset method | C1 returns to its documented baseline | Not recorded |
+| REC-02 | Restart/recover C2 and C3 services/artefacts using actual procedures | Challenge content and service are available after recovery | Not recorded |
+| REC-03 | Restore C4/C5 artefacts from approved source | Correct files are present and listings/checksums match | C5 blocked; C4 evidence pending |
+| REC-04 | Restore/revert C6 using actual approved VM procedure | VM returns to baseline and intended task remains solvable | Not recorded |
+| REC-05 | Restart central CTFd and Flag API dependencies | Portal and validation become available without unintended data loss | Not recorded |
+| REC-06 | Run full acceptance plan after recovery | All six stages work in sequence | Blocked until C5 is complete |
 
-| Defect ID | Description | Severity | Fix/commit | Retest result |
+Record the exact command, snapshot name, operator, time, pre-state, post-state and evidence. Do not invent a reset command or claim a snapshot exists unless verified.
+
+## 6. Defect and deviation log
+
+| ID | Description | Priority | State | Action |
 |---|---|---|---|---|
-| D-001 | To be completed during live testing | — | — | NOT RUN |
+| B-001 | C5 is unfinished; C5-to-C6 handoff and full sequential test cannot be completed | High | Open | Finish C5 and run INT-06, INT-07 and INT-10 |
+| D-001 | Consolidated clean-account end-to-end evidence not yet recorded | High | Open | Record a full run after C5 completion |
+| D-002 | Reset/recovery behaviour needs execution evidence | Medium | Open | Run REC-01 to REC-06 where applicable |
 
-## 5. Change log from Assignment 01
+## 7. Design changes from Assignment 01
 
-Compare the approved Assignment 01 design with the actual deployed box. Add one row for every difference; do not claim a change unless verified.
+Compare the approved design and actual deployed box. For each difference, record the original requirement, actual setting, reason, impact, and evidence. Verify live OS versions, VM resources, IPs, ports, firewall rules, isolation, scoring/dependencies and reset mechanisms before finalising the comparison. Do not treat planned features as implemented features.
 
-| Area | Approved design | Actual implementation | Justification / impact | Evidence |
-|---|---|---|---|---|
-| Deployment | Hybrid Docker + KVM/QEMU design | Verify on the running server | Record practical constraints and any change | Pending |
-| CTFd / flag validation | Central challenge progression and validation | Verify configured integration | Record how progression and validation are enforced | Pending |
-| Network / ports | Restricted access and isolated stages | Verify actual bindings and firewall | Record security or operational reason for each deviation | Pending |
-| Reset / recovery | Repeatable reset of stages/box | Verify actual reset scripts or VM snapshots | Record recovery reliability and limitations | Pending |
+## 8. Final acceptance criteria
 
-## 6. Risk-register outcome review
-
-Reconcile this table with the group's Assignment 01 risk register. These are review prompts, not claims that a risk has already been mitigated.
-
-| Risk | Verification / evidence required | Outcome |
-|---|---|---|
-| Later-stage flag exposed early | Inspect files, web responses, logs and challenge configuration | PENDING |
-| C6 bypasses C5 dependency | Attempt the intended and shortcut paths from a clean state | PENDING |
-| Flag validator accepts invalid input | Submit an incorrect dummy flag | PENDING |
-| Challenge state cannot be restored | Execute stage and whole-box reset/recovery tests | PENDING |
-| Challenge service exposed outside intended boundary | Check host bindings and firewall from an authorised test point | PENDING |
-| Secrets leaked in repository/logs | Review tracked files and sanitised logs; rotate any exposed real credentials | PENDING |
-
-## 7. Final acceptance criteria
-
-- [ ] All six stages are reachable and solvable using the intended path.
-- [ ] Challenge dependencies and flag progression match the CTFd configuration.
-- [ ] Correct and incorrect flag submissions behave as expected.
-- [ ] Unintended shortcuts have been checked and documented.
-- [ ] Stage and whole-box recovery procedures have been run and retested.
-- [ ] Defects, fixes, and actual results have evidence.
-- [ ] Assignment 01 design changes are justified with evidence.
-- [ ] Screenshots/logs contain no live flags, passwords, tokens, or other secrets.
-- [ ] All results in this document reflect tests actually performed on the running box.
+- [ ] C1, C2, C3, C4 and C6 evidence is attached to the results register.
+- [ ] C5 is finished and its PCAP solve path is verified.
+- [ ] C5-to-C6 dependency is demonstrated without shortcuts.
+- [ ] Correct and incorrect answer handling is tested.
+- [ ] Reset/recovery procedures are executed and recorded.
+- [ ] Risk register and design deviations are updated from evidence.
+- [ ] Full clean-account C1-to-C6 run is successful.
+- [ ] Evidence contains no passwords, tokens or live flags.
