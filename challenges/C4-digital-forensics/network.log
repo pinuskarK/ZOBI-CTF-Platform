@@ -1,0 +1,22 @@
+NETWORK CONNECTION LOG
+Workstation: DR-ALEX-PC
+Internal IP: 192.168.10.25
+Date: 2026-09-18
+
+-----
+09:02:14 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: UDP | PORT: 53  | EVENT: DNS request
+09:11:37 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
+09:24:51 | SRC: 192.168.10.25 | DST: 8.8.8.8         | PROTOCOL: UDP | PORT: 53  | EVENT: DNS request
+09:37:26 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
+09:42:19 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Research portal connection
+09:46:54 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
+09:48:51 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Outbound connection established 
+09:49:02 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Connection authenticated. 
+09:49:12 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Large outbound data transfer detected; cure.txt and research files included
+09:49:14 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Transfer in progress; cure.txt included in transferred data
+09:49:16 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Transfer completed
+09:49:18 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Connection closed: flag{forensic_trail_investigate}
+09:50:22 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
+09:51:44 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Session terminated
+09:52:01 | SRC: 192.168.10.25 | DST: 198.51.100.23   | PROTOCOL: TCP | PORT: 80  | EVENT: Connection attempt blocked
+-----

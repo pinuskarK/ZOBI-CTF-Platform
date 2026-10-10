@@ -1,0 +1,22 @@
+services:
+  c3-web-security:
+    build: .
+    container_name: zobi-c3-web-security
+    restart: unless-stopped
+    ports:
+      - "5003:5003"
+    environment:
+      C3_FLAG: "ZOBI{abandoned_lab_archive_7f3c9a2d}"
+      FLASK_SECRET_KEY: "replace-this-development-key-before-release"
+    volumes:
+      - c3_data:/app/data
+    networks:
+      - zobi_challenges
+
+volumes:
+  c3_data:
+
+networks:
+  zobi_challenges:
+    external: true
+    name: zobi_challenges

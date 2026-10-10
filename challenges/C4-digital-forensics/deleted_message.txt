@@ -1,0 +1,12 @@
+RECOVERED DELETED MESSAGE FROM DR ALEX
+Recovery Status: Partially recovered
+Author: Dr. Alex
+
+-------
+I checked the network records and found a suspicious outbound connection from my workstation. The destination IP address was: 198.51.100.23.
+
+The logs show that cure.txt was accessed shortly before a large amount of data was transferred to this address. The records also show that a USB storage device was connected during the same period. I suspect that the cure research may have been copied and transferred without authorization, but the available evidence does not identify who was responsible.
+
+Please examine the network logs and other records, such as access logs, system logs, and USB history. The evidence may help establish what happened.
+
+- Dr. Alex
