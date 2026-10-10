@@ -4,7 +4,7 @@ Internal IP: 192.168.10.25
 Date: 2026-09-18
 
 -----
-09:02:14 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: UDP | PORT: 443 | EVENT: DNS request
+09:02:14 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: UDP | PORT: 53  | EVENT: DNS request
 09:11:37 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
 09:24:51 | SRC: 192.168.10.25 | DST: 8.8.8.8         | PROTOCOL: UDP | PORT: 53  | EVENT: DNS request
 09:37:26 | SRC: 192.168.10.25 | DST: 192.168.10.1    | PROTOCOL: TCP | PORT: 443 | EVENT: Internal service connection
