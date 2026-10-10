@@ -73,3 +73,34 @@ This script checks HTTP reachability only. It does not submit flags, exploit cha
 - One complete clean-account C1-to-C6 run.
 
 Never put real credentials, tokens or live flags in public-facing docs or screenshots. Do not mark a test PASS until it has actually been executed and its evidence saved.
+
+
+## Actual integrated artefacts and test code
+
+This branch now includes the completed-stage artefacts needed for integration review:
+
+- C1: `challenges/C1-steganography/mystery_photo.jpg`
+- C2: `challenges/C2-cryptography/lab_assistant_msg.txt`
+- C3: Flask application, database initializer, Dockerfile, Compose file and requirements under `challenges/C3-web-security/`
+- C4: `access.log`, `deleted_message.txt`, `network.log`, `system.log` and `usb_history.txt` under `challenges/C4-digital-forensics/`
+
+C5's unfinished PCAP has intentionally not been included as a completed stage. C6 remains a VM-based challenge; the VM itself and secrets are not stored in this repository.
+
+Additional Member 4 files:
+- `docs/member4/STAGE-INTEGRATION-GUIDE.md` — exact stage artefacts, current lab endpoints, C3 commands, expected integration behaviour and demonstration checklist.
+- `scripts/testing/check_artifacts.py` — verifies that all expected completed-stage files and Member 4 documents exist.
+- `scripts/testing/smoke_test.py` — checks HTTP service reachability only.
+
+Run the repository integrity test from the repository root:
+
+```bash
+python3 scripts/testing/check_artifacts.py
+```
+
+Then run the service smoke test:
+
+```bash
+python3 scripts/testing/smoke_test.py
+```
+
+A passing artifact check does not mean the runtime challenges or full C1-to-C6 sequence have passed acceptance testing. C5 must be finished before the full flow can be verified.
