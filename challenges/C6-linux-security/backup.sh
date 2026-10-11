@@ -6,7 +6,7 @@ set -eu
 
 BACKUP_DIR="/var/backups/zobi"
 SOURCE_DIR="/home/researcher/research-data"
-mkdir -p "$BACKUP_DIR"
+/usr/bin/mkdir -p "$BACKUP_DIR"
 ARCHIVE="$BACKUP_DIR/research-$(/usr/bin/date +%Y%m%d%H%M%S).tar.gz"
 
 # Intentionally unsafe for the challenge: command lookup uses PATH.
