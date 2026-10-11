@@ -66,7 +66,7 @@ This script checks HTTP reachability only. It does not submit flags, exploit cha
 - Screenshots of each stage and its intended solve path.
 - Accepted and rejected answer behaviour, with secrets redacted.
 - CTFd scoring/progression evidence.
-- PCAP solve evidence and C5-to-C6 handoff after C5 is finished.
+- PCAP solve evidence, CTFd submission evidence, and C5-to-C6 handoff after live acceptance.
 - Reset/recovery commands or snapshot names and post-recovery retest results.
 - Defect descriptions, fixes, commit references and retest evidence.
 - Sanitised live configuration showing ports, isolation and VM settings.
