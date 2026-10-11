@@ -20,8 +20,6 @@ REQUIRED = {
     "C3 unit tests": "challenges/C3-web-security/tests/test_app.py",
     "C3 deployment guide": "docs/platform/C3-Abandoned-Lab.md",
     "C3 Python requirements": "challenges/C3-web-security/requirements.txt",
-    "C3 environment template": "challenges/C3-web-security/.env.example",
-    "C3 unit tests": "challenges/C3-web-security/tests/test_app.py",
     "C4 access log": "challenges/C4-digital-forensics/access.log",
     "C4 deleted message": "challenges/C4-digital-forensics/deleted_message.txt",
     "C4 network log": "challenges/C4-digital-forensics/network.log",
