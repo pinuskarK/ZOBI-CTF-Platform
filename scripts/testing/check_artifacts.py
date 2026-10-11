@@ -29,6 +29,7 @@ REQUIRED = {
     "C5 stage README": "challenges/C5-networking/README.md",
     "C5 PCAP validator": "scripts/testing/validate_c5_pcap.py",
     "C5 integration status": "docs/member4/C5-INTEGRATION-STATUS.md",
+    "Combined repository check runner": "scripts/testing/run_repository_checks.sh",
     "C6 integration notes": "challenges/C6-linux-security/README.md",
     "Member 4 integration plan": "docs/member4/INTEGRATION_TEST_PLAN.md",
     "Member 4 results register": "docs/member4/TEST_RESULTS.md",
