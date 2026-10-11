@@ -1,7 +1,7 @@
 # ZOBI CTF — Integration and Acceptance Test Plan
 
 **Owner:** Member 4 — Integration, Testing & Documentation  
-**Current status:** C1, C2, C3, C4 and C6 are reported complete by the project owner. C5 is unfinished. Therefore the complete C1-to-C6 acceptance run is blocked until C5 is finished.
+**Current status:** C1, C2, C3, C4 and C6 are reported complete by the project owner. C5 artefacts are integrated; live acceptance remains pending. Therefore the complete C1-to-C6 acceptance run is blocked until C5 is finished.
 
 ## 1. Six-stage integration overview
 
@@ -25,11 +25,11 @@ The status labels above reflect the project owner's update. Attach live evidence
 | INT-03 | Open C2 and decode supplied artefact | Decoded clue is meaningful and correct answer is accepted | Reported complete; attach evidence |
 | INT-04 | Open C3 and use intended SQLi path | Challenge behaves as designed and correct answer is accepted | Reported complete; attach evidence |
 | INT-05 | Download and analyse C4 evidence bundle | Intended forensic finding is reproducible and correct answer is accepted | Reported complete; attach evidence |
-| INT-06 | Open C5 and analyse its PCAP | Player obtains the intended clue without later-stage flags being exposed prematurely | BLOCKED — C5 unfinished |
+| INT-06 | Open C5 and analyse its PCAP | Player obtains the intended clue without later-stage flags being exposed prematurely | PENDING — live C5 acceptance not recorded |
 | INT-07 | Use clue from C5 to access C6 | Participant reaches the isolated VM through the intended path | BLOCKED — requires C5 |
 | INT-08 | Complete C6 task and submit answer | Validator accepts intended answer and records progress | C6 reported complete; end-to-end handoff pending |
 | INT-09 | Submit an incorrect dummy answer at each applicable stage | Incorrect answer is rejected and does not grant progress | Capture evidence |
-| INT-10 | Run C1 through C6 using a clean participant account | All stages work in sequence and completion state is recorded | BLOCKED — C5 unfinished |
+| INT-10 | Run C1 through C6 using a clean participant account | All stages work in sequence and completion state is recorded | PENDING — live C5 acceptance not recorded |
 | INT-11 | Restart/recover each implemented service or VM using its approved procedure | Service returns to a healthy, known state without unintended loss of scores/data | Evidence pending |
 | INT-12 | Inspect files, web responses, CTFd settings and network exposure for shortcuts | No unintended early access to later-stage flags or services | Evidence pending |
 
@@ -67,7 +67,7 @@ Only perform these checks against the authorised project lab.
 | REC-03 | Restore C4/C5 artefacts from approved source | Correct files are present and listings/checksums match | C5 blocked; C4 evidence pending |
 | REC-04 | Restore/revert C6 using actual approved VM procedure | VM returns to baseline and intended task remains solvable | Not recorded |
 | REC-05 | Restart central CTFd and Flag API dependencies | Portal and validation become available without unintended data loss | Not recorded |
-| REC-06 | Run full acceptance plan after recovery | All six stages work in sequence | Blocked until C5 is complete |
+| REC-06 | Run full acceptance plan after recovery | All six stages work in sequence | Pending live C5 acceptance |
 
 Record the exact command, snapshot name, operator, time, pre-state, post-state and evidence. Do not invent a reset command or claim a snapshot exists unless verified.
 
@@ -75,7 +75,7 @@ Record the exact command, snapshot name, operator, time, pre-state, post-state a
 
 | ID | Description | Priority | State | Action |
 |---|---|---|---|---|
-| B-001 | C5 is unfinished; C5-to-C6 handoff and full sequential test cannot be completed | High | Open | Finish C5 and run INT-06, INT-07 and INT-10 |
+| B-001 | C5 artefacts are integrated; live acceptance remains pending; C5-to-C6 handoff and full sequential test cannot be completed | High | Open | Finish C5 and run INT-06, INT-07 and INT-10 |
 | D-001 | Consolidated clean-account end-to-end evidence not yet recorded | High | Open | Record a full run after C5 completion |
 | D-002 | Reset/recovery behaviour needs execution evidence | Medium | Open | Run REC-01 to REC-06 where applicable |
 
