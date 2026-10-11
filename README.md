@@ -25,25 +25,25 @@ The actual running host version differs from the Ubuntu 20.04 version in the ori
 
 ## C3 local setup
 
-Run on the authorised lab host:
+Run on the authorised lab host from the repository root:
 
+    cd ~/ZOBI-CTF-Platform
+    bash scripts/setup/create-challenge-network.sh
+    sudo docker network inspect zobi_challenges
     cd challenges/C3-web-security
     cp .env.example .env
     nano .env
 
 Set a private C3_FLAG that exactly matches the CTFd configuration, a long random FLASK_SECRET_KEY, and a private C3_DEMO_PASSWORD used to seed the lab account. Do not commit .env. The default host binding is loopback. To allow authorised participants from the LAN, set C3_BIND_ADDRESS to the lab host's intended LAN address and enforce the matching firewall rule.
 
-From the repository root, run the approved network setup helper and inspect the result:
+Start and inspect the service:
 
-    bash scripts/setup/create-challenge-network.sh
-    sudo docker network inspect zobi_challenges
-
-The helper creates an internal bridge on a clean setup and stops if an existing network is not internal. Do not delete an active network to make the check pass; plan and verify a safe migration.
     docker compose up -d --build
     docker compose ps
+    docker compose logs --tail=100 c3-web-security
     curl -i http://127.0.0.1:5003/health
 
-Do not expose the deliberately vulnerable C3 service to the public Internet. Inspect the network and firewall rather than assuming that a named bridge provides complete isolation.
+The network helper creates an internal bridge on a clean setup and stops if an existing network is not internal. Do not delete an active network to make the check pass; plan and verify a safe migration. Do not expose the deliberately vulnerable C3 service to the public Internet. Inspect the network and firewall rather than assuming a named bridge provides complete isolation.
 
 ## C3 automated tests
 
