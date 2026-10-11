@@ -4,8 +4,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-os.environ.setdefault("FLASK_SECRET_KEY", "test-only-session-key")
-os.environ.setdefault("C3_FLAG", "TEST_FLAG_FOR_UNIT_TESTS")
+os.environ["FLASK_SECRET_KEY"] = "test-only-session-key"
+os.environ["C3_FLAG"] = "TEST_FLAG_FOR_UNIT_TESTS"
 
 import app as c3_app
 
