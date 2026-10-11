@@ -173,7 +173,7 @@ The C3 repository component now includes:
 - Unit tests at `challenges/C3-web-security/tests/test_app.py` for health, unauthenticated archive access, ordinary invalid login, intended SQLi behaviour, and logout.
 - A full C3 setup, operation, recovery and evidence guide at `docs/platform/C3-Abandoned-Lab.md`.
 - A root setup/inventory guide and read-only host inventory script at `scripts/testing/member1-platform-check.sh`.
-- C6 VM notes at `docs/platform/C6-CURE-Research-Server.md`.
+- C6 VM notes at docs/platform/C6-CURE-Research-Server.md, plus lab-only source templates under challenges/C6-linux-security/. The templates are not proof of the live VM's exact configuration; compare them against the guest before claiming parity.
 
 Run C3 unit tests from the C3 directory with Flask/Gunicorn dependencies installed:
 
