@@ -32,7 +32,7 @@ cp .env.example .env
 nano .env
 ```
 
-Replace the placeholder values with a fresh, private CTF flag and a long random session secret. Do not commit `.env` or show its contents in screenshots.
+Replace the placeholder values with the exact CTFd flag, a long random session secret, and a private C3_DEMO_PASSWORD for the seeded lab account. Do not commit `.env` or show its contents in screenshots.
 
 Create the network if it does not already exist:
 
