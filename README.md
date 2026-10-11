@@ -24,6 +24,10 @@ This branch includes:
 
 From the repository root:
 
+    bash scripts/testing/run_repository_checks.sh
+
+For separate checks, run:
+
     python3 scripts/testing/check_artifacts.py
     python3 scripts/testing/smoke_test.py
 
