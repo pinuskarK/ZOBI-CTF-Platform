@@ -63,10 +63,10 @@ containerized challenge environments.
 - Driver: bridge
 - Subnet: 172.20.0.0/24
 - Gateway: 172.20.0.1
-- Current containers: none
+- C3 service is defined to attach to this network; confirm current attachment with `docker network inspect zobi_challenges` before the demo.
 
-The challenge network is kept separate from the CTFd participant-facing
-network (`ctfd_default`) and the CTFd internal network (`ctfd_internal`).
+The challenge network is intended to remain separate from the CTFd participant-facing
+network (`ctfd_default`) and the CTFd internal network (`ctfd_internal`). Inspect the live network and container attachments before claiming the separation is enforced.
 
 ### File-Based Challenges
 
@@ -82,8 +82,7 @@ being directly exposed as public network services.
 
 - C3 - Web Security
 
-The web-security challenge will run in an isolated Docker environment
-managed separately from the CTFd infrastructure.
+C3 is defined in `challenges/C3-web-security/` as a Flask/SQLite Docker service. The Compose configuration attaches it to `zobi_challenges`; its host binding defaults to loopback. For remote participant access, configure only the intended lab interface and a matching firewall rule. Verify the live network attachments and firewall before describing the isolation as tested.
 
 ### Virtual-Machine Challenge
 
@@ -139,7 +138,8 @@ Completed:
 
 Next:
 
-- Implement challenge-environment isolation
+- Verify the C3 container's actual network attachment and host binding
+- Implement/verify challenge-environment isolation
 - Configure required ports
 - Configure firewall rules
 - Implement reset/recovery
