@@ -4,9 +4,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-os.environ.setdefault("FLASK_SECRET_KEY", "test-only-session-key")
-os.environ.setdefault("C3_FLAG", "TEST_FLAG_FOR_UNIT_TESTS")
-os.environ.setdefault("C3_DEMO_PASSWORD", "test-only-password")
+os.environ["FLASK_SECRET_KEY"] = "test-only-session-key"
+os.environ["C3_FLAG"] = "TEST_FLAG_FOR_UNIT_TESTS"
 
 import app as c3_app
 
@@ -16,14 +15,13 @@ class C3ApplicationTests(unittest.TestCase):
         self.temp_dir = tempfile.TemporaryDirectory()
         self.db_path = str(Path(self.temp_dir.name) / "test.db")
         c3_app.DB_PATH = self.db_path
-        c3_app.FLAG = "TEST_FLAG_FOR_UNIT_TESTS"
         with sqlite3.connect(self.db_path) as connection:
             connection.execute(
                 "CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)"
             )
             connection.execute(
                 "INSERT INTO users (username, password) VALUES (?, ?)",
-                ("researcher", "test-only-password"),
+                ("researcher", "test-password-not-for-production"),
             )
         c3_app.app.config.update(TESTING=True, SECRET_KEY="test-only-session-key")
         self.client = c3_app.app.test_client()
@@ -49,7 +47,7 @@ class C3ApplicationTests(unittest.TestCase):
         self.assertIn(b"Access denied", response.data)
 
     def test_intended_sql_injection_reaches_archive(self):
-        # Intentionally exercises only a temporary local test database.
+        # Demonstrates the intentional flaw only against the temporary test DB.
         response = self.client.post(
             "/",
             data={"username": "' OR '1'='1' -- ", "password": "irrelevant"},
@@ -61,11 +59,12 @@ class C3ApplicationTests(unittest.TestCase):
 
     def test_logout_clears_session(self):
         self.client.post(
-            "/", data={"username": "researcher", "password": "test-only-password"}
+            "/", data={"username": "researcher", "password": "test-password-not-for-production"}
         )
-        self.client.get("/logout")
-        response = self.client.get("/archive")
+        response = self.client.get("/logout")
         self.assertEqual(response.status_code, 302)
+        archive = self.client.get("/archive")
+        self.assertEqual(archive.status_code, 302)
 
 
 if __name__ == "__main__":
