@@ -49,7 +49,7 @@ From the repository root, run:
 
 Defaults:
 - Flag API: http://127.0.0.1:8080/
-- C3 health endpoint: http://192.168.8.188:5003/health
+- C3 health endpoint: http://127.0.0.1:5003/health (loopback default; set ZOBI_C3_URL to the authorised lab address when running remotely)
 
 Optional environment variables:
 - ZOBI_FLAG_API_URL — Flag API base URL
