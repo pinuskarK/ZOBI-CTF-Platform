@@ -3,10 +3,14 @@ import sqlite3
 from flask import Flask, request, render_template_string, session, redirect, url_for
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "zobi-c3-development-only")
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
+if not app.secret_key:
+    raise RuntimeError("FLASK_SECRET_KEY must be set in the environment")
 
-DB_PATH = "/app/data/research.db"
-FLAG = os.environ.get("C3_FLAG", "ZOBI{abandoned_lab_archive_7f3c9a2d}")
+DB_PATH = os.environ.get("C3_DB_PATH", "/app/data/research.db")
+FLAG = os.environ.get("C3_FLAG")
+if not FLAG:
+    raise RuntimeError("C3_FLAG must be set in the environment")
 
 LOGIN_PAGE = """
 <!doctype html>
@@ -63,39 +67,31 @@ ARCHIVE_PAGE = """
 @app.route("/", methods=["GET", "POST"])
 def login():
     error = None
-
     if request.method == "POST":
         username = request.form.get("username", "")
         password = request.form.get("password", "")
 
-        # INTENTIONAL VULNERABILITY FOR THIS ISOLATED CTF CHALLENGE:
-        # User input is directly inserted into the SQL query.
+        # INTENTIONAL SQL INJECTION VULNERABILITY FOR THIS ISOLATED CTF ONLY.
         query = (
             "SELECT username FROM users "
             f"WHERE username = '{username}' AND password = '{password}'"
         )
-
         try:
             with sqlite3.connect(DB_PATH) as connection:
                 user = connection.execute(query).fetchone()
-
             if user:
                 session["researcher"] = user[0]
                 return redirect(url_for("archive"))
-
         except sqlite3.Error:
-            # Keep database details hidden from participants.
+            # Do not expose database internals to participants.
             pass
-
         error = "Access denied. Check your credentials and try again."
-
     return render_template_string(LOGIN_PAGE, error=error)
 
 @app.route("/archive")
 def archive():
     if "researcher" not in session:
         return redirect(url_for("login"))
-
     return render_template_string(ARCHIVE_PAGE, flag=FLAG)
 
 @app.route("/logout")
