@@ -45,6 +45,8 @@ REQUIRED = {
     "Member 4 risk register": "docs/member4/RISK-REGISTER.md",
     "Member 4 design comparison": "docs/member4/DESIGN-CHANGES.md",
     "Member 4 stage integration guide": "docs/member4/STAGE-INTEGRATION-GUIDE.md",
+    "KVM operations guide": "infrastructure/kvm/c6-linux-security/README.md",
+    "Firewall policy guide": "infrastructure/firewall/README.md",
 }
 
 def main() -> int:
