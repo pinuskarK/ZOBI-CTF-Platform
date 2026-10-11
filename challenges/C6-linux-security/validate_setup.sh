@@ -22,7 +22,7 @@ check() {
 check "researcher account exists" id "$USER_NAME"
 check "backup script exists" test -f "$SCRIPT"
 check "backup script is owned by root" test "$(stat -c '%U:%G' "$SCRIPT" 2>/dev/null)" = "root:root"
-check "backup script is not group/world writable" bash -c '[[ -f "$1" && ! -w "$1" ]]' _ "$SCRIPT"
+check "backup script is not group/world writable" bash -c 'test -f "$1" && ! find "$1" -maxdepth 0 -perm /022 -print -quit | grep -q .' _ "$SCRIPT"
 check "sudoers policy installed" test -f "$SUDOERS"
 check "sudoers policy passes syntax validation" visudo -cf "$SUDOERS"
 check "flag file exists" test -f "$FLAG"
