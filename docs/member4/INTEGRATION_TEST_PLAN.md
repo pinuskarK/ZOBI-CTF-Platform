@@ -76,7 +76,7 @@ Record the exact command, snapshot name, operator, time, pre-state, post-state a
 | ID | Description | Priority | State | Action |
 |---|---|---|---|---|
 | B-001 | C5 artefacts are integrated; live acceptance remains pending; C5-to-C6 handoff and full sequential test cannot be completed | High | Open | Run INT-06 and INT-07 with the integrated artefact, then run INT-10 after all live stage tests pass |
-| D-001 | Consolidated clean-account end-to-end evidence not yet recorded | High | Open | Record a full run after C5 completion |
+| D-001 | Consolidated clean-account end-to-end evidence not yet recorded | High | Open | Record a full run after C5 live acceptance |
 | D-002 | Reset/recovery behaviour needs execution evidence | Medium | Open | Run REC-01 to REC-06 where applicable |
 
 ## 7. Design changes from Assignment 01
