@@ -6,7 +6,7 @@ This folder contains the integration plan, test results register, reset/recovery
 
 - **Reported complete:** C1 Steganography, C2 Cryptography, C3 Web Security, C4 Digital Forensics, and C6 Linux/System Security.
 - **C5 artefacts integrated:** the PCAP, generator, source transmission and expected-answer file are now present in this branch. Live CTFd acceptance and C5-to-C6 handoff remain unverified.
-- **Overall end-to-end acceptance:** Pending C5. Do not describe the full C1-to-C6 sequence as complete until a clean participant account has followed the intended path through all six stages.
+- **Overall end-to-end acceptance:** Pending live acceptance. Do not describe the full C1-to-C6 sequence as complete until a clean participant account has followed the intended path through all six stages.
 
 The stage statuses above reflect the current project update. The documents distinguish implementation status from independently captured acceptance evidence.
 
@@ -22,7 +22,8 @@ The stage statuses above reflect the current project update. The documents disti
 
 | File | Purpose |
 |---|---|
-| INTEGRATION_TEST_PLAN.md | End-to-end acceptance plan, negative tests, C5 completion gate and reset checks |
+| INTEGRATION_TEST_PLAN.md | End-to-end acceptance plan, negative tests, C5 live-acceptance gate and reset checks |
+| C5-INTEGRATION-STATUS.md | C5 artefact paths, build, manual solve, and pending live acceptance evidence |
 | TEST_RESULTS.md | Stage-by-stage implementation status, known observations, evidence checklist and blocker log |
 | RESET-RECOVERY.md | Safe recovery procedures and execution record |
 | RISK-REGISTER.md | Integration/security/recovery risks and required verification |
@@ -95,6 +96,7 @@ Run the repository integrity test from the repository root:
 
 ```bash
 python3 scripts/testing/check_artifacts.py
+python3 scripts/testing/validate_c5_pcap.py  # requires Scapy
 ```
 
 Then run the service smoke test:
