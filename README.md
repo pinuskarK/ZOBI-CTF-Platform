@@ -31,7 +31,7 @@ Run on the authorised lab host:
     cp .env.example .env
     nano .env
 
-Set a private C3_FLAG that exactly matches the CTFd configuration and a long random FLASK_SECRET_KEY. Do not commit .env. The default host binding is loopback. To allow authorised participants from the LAN, set C3_BIND_ADDRESS to the lab host's intended LAN address and enforce the matching firewall rule.
+Set a private C3_FLAG that exactly matches the CTFd configuration, a long random FLASK_SECRET_KEY, and a private C3_DEMO_PASSWORD used to seed the lab account. Do not commit .env. The default host binding is loopback. To allow authorised participants from the LAN, set C3_BIND_ADDRESS to the lab host's intended LAN address and enforce the matching firewall rule.
 
 Create and inspect the external challenge network before starting:
 
