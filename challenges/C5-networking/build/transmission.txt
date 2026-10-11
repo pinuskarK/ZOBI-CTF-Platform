@@ -1,0 +1,16 @@
+ZOBI RESEARCH LAB — TRANSFER RECORD
+
+File reference: cure.txt
+Workstation: DR-ALEX-PC
+The cure research was transferred. Investigate the central server to recover the remaining evidence.
+
+FLAG{last_transmission_recovered}
+
+ZOBI CENTRAL SERVER ACCESS
+Service: SSH
+Host: 10.10.20.50
+Port: 22
+Username: researcher
+Password: researcher@2026
+
+Continue your investigation on the central server.
