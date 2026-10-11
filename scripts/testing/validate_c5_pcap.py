@@ -28,7 +28,7 @@ for packet in packets:
         destinations.add(packet[IP].dst)
     if Raw in packet:
         payloads.append(bytes(packet[Raw].load))
-joined = b"\n".join(payloads)
+joined = b"".join(payloads)
 required_markers = {
     "suspicious destination": b"198.51.100.23",
     "file reference": b"cure.txt",
