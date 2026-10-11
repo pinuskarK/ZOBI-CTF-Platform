@@ -44,7 +44,7 @@ Included files:
 
 The project notes identify the service as **The Abandoned Lab / Research Portal**, using Flask and SQLite in Docker, container name `zobi-c3-web-security`, Docker network `zobi_challenges`, and host port `5003`.
 
-First follow docs/platform/C3-Abandoned-Lab.md. The current Compose file requires local C3_FLAG and FLASK_SECRET_KEY values; copy .env.example to .env and replace the placeholders. The default host binding is loopback. If participants must reach C3 from another machine, set C3_BIND_ADDRESS to the authorised lab interface address and enforce a matching firewall rule.
+First follow docs/platform/C3-Abandoned-Lab.md. The current Compose file requires local C3_FLAG, FLASK_SECRET_KEY, and C3_DEMO_PASSWORD values; copy .env.example to .env and replace the placeholders. The default host binding is loopback. If participants must reach C3 from another machine, set C3_BIND_ADDRESS to the authorised lab interface address and enforce a matching firewall rule.
 
 From the challenge directory on the authorised lab host:
 
