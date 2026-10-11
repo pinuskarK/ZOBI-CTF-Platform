@@ -15,7 +15,7 @@ The actual running host version differs from the Ubuntu 20.04 version in the ori
 
 ## Repository map
 
-- challenges/ — challenge source and assets maintained in this branch.
+- challenges/ — platform-owned challenge source (C3); the Member 4 branch contains the integrated team artefacts.
 - docs/MEMBER1_PLATFORM_ARCHITECTURE_IMPLEMENTATION.md — implementation evidence and limits.
 - docs/MEMBER1_ASSIGNMENT2_COMPLIANCE_CHECKLIST.md — assignment requirements and outstanding evidence.
 - docs/platform/ — CTFd, network and challenge deployment documentation.
