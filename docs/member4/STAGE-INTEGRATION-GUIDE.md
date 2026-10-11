@@ -95,7 +95,7 @@ Member 4 checks:
 The intended role of C5 is to analyse a network capture and reveal only the connection details needed to proceed to C6. The PCAP, generator, organiser transmission source and expected-answer file are available under challenges/C5-networking/. The artefact is present, but that does not prove the CTFd attachment, correct/incorrect flag handling or C5-to-C6 handoff passed.
 
 Before integration can be accepted:
-- Finish and review the PCAP artefact.
+- Review the integrated PCAP artefact and confirm its hash against the source of truth.
 - Verify the intended solve path from a clean copy.
 - Ensure the clue exposes only the required next-stage details.
 - Attach the final artefact to CTFd and confirm scoring.
@@ -160,7 +160,7 @@ The smoke test checks HTTP reachability only. It does not prove challenge correc
 - [ ] Demonstrate C6 separately as a completed challenge, while explaining that its participant handoff depends on C5.
 - [ ] Show accepted and rejected submissions using safe test values.
 - [ ] Show service/network isolation and the real recovery procedure.
-- [ ] After C5 is finished, run the full C1-to-C6 sequence from a clean participant account.
+- [ ] After C5's live acceptance tests pass, run the full C1-to-C6 sequence from a clean participant account.
 
 ## 5. Evidence log format
 
