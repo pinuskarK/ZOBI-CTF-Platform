@@ -34,11 +34,13 @@ nano .env
 
 Replace the placeholder values with the exact CTFd flag, a long random session secret, and a private C3_DEMO_PASSWORD for the seeded lab account. Do not commit `.env` or show its contents in screenshots.
 
-From the repository root, run the approved setup helper:
+Return to the repository root, run the approved setup helper, and then return to the C3 directory:
 
 ```bash
+cd ../..
 bash scripts/setup/create-challenge-network.sh
 sudo docker network inspect zobi_challenges
+cd challenges/C3-web-security
 ```
 
 The helper creates an internal bridge on a clean setup and stops if an existing network is not internal. Do not delete an active network to make the check pass; plan a safe migration separately.
