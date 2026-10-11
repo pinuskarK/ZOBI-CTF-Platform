@@ -31,10 +31,18 @@ check_file /opt/zobi-c6/backup.sh
 check_file /root/cure.txt
 
 if [ -e /opt/zobi-c6/backup.sh ]; then
-  stat -c 'owner=%U group=%G mode=%a path=%n' /opt/zobi-c6/backup.sh
-  if [ -O /opt/zobi-c6/backup.sh ] && [ -w /opt/zobi-c6/backup.sh ]; then
-    printf '[FAIL] Current administrator can write the script; inspect ownership and mode before release.\n'
+  owner="$(stat -c '%U' /opt/zobi-c6/backup.sh)"
+  mode="$(stat -c '%a' /opt/zobi-c6/backup.sh)"
+  printf 'owner=%s mode=%s path=%s\n' "$owner" "$mode" /opt/zobi-c6/backup.sh
+  if [ "$owner" != "root" ]; then
+    printf '[FAIL] Challenge script is not owned by root.\n'
     failures=$((failures + 1))
+  fi
+  if find /opt/zobi-c6/backup.sh -maxdepth 0 -perm /022 -print -quit | grep -q .; then
+    printf '[FAIL] Group/other write permission is enabled on the challenge script.\n'
+    failures=$((failures + 1))
+  else
+    printf '[PASS] Challenge script is not group/other writable\n'
   fi
 fi
 
