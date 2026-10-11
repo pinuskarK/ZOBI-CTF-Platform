@@ -4,7 +4,7 @@ services:
     container_name: zobi-c3-web-security
     restart: unless-stopped
     ports:
-      # Loopback by default. Change only to the approved lab interface IP.
+      # Restrict this to the lab host/LAN using host firewall rules.
       - "${C3_BIND_ADDRESS:-127.0.0.1}:5003:5003"
     environment:
       C3_FLAG: ${C3_FLAG:?Set C3_FLAG in the local .env file}
