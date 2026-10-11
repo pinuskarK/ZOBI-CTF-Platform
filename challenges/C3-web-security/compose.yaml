@@ -1,0 +1,32 @@
+services:
+  c3-web-security:
+    build: .
+    container_name: zobi-c3-web-security
+    restart: unless-stopped
+    ports:
+      # Restrict this to the lab host/LAN using host firewall rules.
+      - "${C3_BIND_ADDRESS:-127.0.0.1}:5003:5003"
+    environment:
+      C3_FLAG: ${C3_FLAG:?Set C3_FLAG in the local .env file}
+      FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:?Set FLASK_SECRET_KEY in the local .env file}
+      C3_DB_PATH: /app/data/research.db
+      C3_DEMO_USERNAME: ${C3_DEMO_USERNAME:-researcher}
+      C3_DEMO_PASSWORD: ${C3_DEMO_PASSWORD:?Set C3_DEMO_PASSWORD in the local .env file}
+    volumes:
+      - c3_data:/app/data
+    networks:
+      - zobi_challenges
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5003/health', timeout=2).read()"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  c3_data:
+
+networks:
+  zobi_challenges:
+    external: true
+    name: zobi_challenges
