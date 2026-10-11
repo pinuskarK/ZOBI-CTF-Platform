@@ -3,6 +3,7 @@ import sqlite3
 from flask import Flask, request, render_template_string, session, redirect, url_for
 
 app = Flask(__name__)
+# Secrets must be supplied by the local environment; never commit real values.
 app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 if not app.secret_key:
     raise RuntimeError("FLASK_SECRET_KEY must be set in the environment")
@@ -71,7 +72,8 @@ def login():
         username = request.form.get("username", "")
         password = request.form.get("password", "")
 
-        # INTENTIONAL SQL INJECTION VULNERABILITY FOR THIS ISOLATED CTF ONLY.
+        # INTENTIONAL SQL INJECTION VULNERABILITY:
+        # This unsafe query is part of the isolated CTF exercise only.
         query = (
             "SELECT username FROM users "
             f"WHERE username = '{username}' AND password = '{password}'"
@@ -83,7 +85,7 @@ def login():
                 session["researcher"] = user[0]
                 return redirect(url_for("archive"))
         except sqlite3.Error:
-            # Do not expose database internals to participants.
+            # Avoid exposing database internals in participant-facing responses.
             pass
         error = "Access denied. Check your credentials and try again."
     return render_template_string(LOGIN_PAGE, error=error)
