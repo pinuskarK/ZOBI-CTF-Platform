@@ -33,10 +33,12 @@ Run on the authorised lab host:
 
 Set a private C3_FLAG that exactly matches the CTFd configuration, a long random FLASK_SECRET_KEY, and a private C3_DEMO_PASSWORD used to seed the lab account. Do not commit .env. The default host binding is loopback. To allow authorised participants from the LAN, set C3_BIND_ADDRESS to the lab host's intended LAN address and enforce the matching firewall rule.
 
-Create and inspect the external challenge network before starting:
+From the repository root, run the approved network setup helper and inspect the result:
 
-    docker network inspect zobi_challenges >/dev/null 2>&1 || docker network create --driver bridge --subnet 172.20.0.0/24 --gateway 172.20.0.1 zobi_challenges
-    docker network inspect zobi_challenges
+    bash scripts/setup/create-challenge-network.sh
+    sudo docker network inspect zobi_challenges
+
+The helper creates an internal bridge on a clean setup and stops if an existing network is not internal. Do not delete an active network to make the check pass; plan and verify a safe migration.
     docker compose up -d --build
     docker compose ps
     curl -i http://127.0.0.1:5003/health
