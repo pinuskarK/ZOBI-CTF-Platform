@@ -1,63 +1,29 @@
-# C6 — Linux/System Security: Backup Path Investigation
+# C6 — The CURE Research Server
 
-**Stage:** 6  
-**Domain:** Linux privilege escalation / system security  
-**Environment:** Dedicated Ubuntu Server VM on the isolated ZOBI lab network  
-**Status:** Challenge is reported complete in the live lab. This repository guide documents the known setup and validation requirements; the VM disk image, live credentials and flag are not stored here.
+C6 is the Hard Linux/System Security challenge, hosted in a dedicated KVM/QEMU Ubuntu guest. The live lab notes identify guest 10.10.20.50/24 on the isolated libvirt network zobi_c6_isolated, with the challenge script at /opt/zobi-c6/backup.sh and intended account researcher.
 
-## Scenario
+## Repository files
 
-The researcher account has permission to run an administrative backup script. The script invokes a utility by its command name rather than an absolute trusted path. The sudo rule preserves the caller's PATH through the `SETENV` permission. In a deliberately vulnerable, isolated CTF VM, this combination allows a participant to investigate command lookup and demonstrate the intended privilege-escalation path.
+- backup.sh — intentionally vulnerable backup-script template; the command name tar is deliberately not an absolute path.
+- researcher-sudoers.example — narrowly scoped, intentionally vulnerable sudoers example for the dedicated CTF VM.
+- validate_setup.sh — read-only checks for account, file ownership/permissions, sudoers syntax and the flag-file permissions.
 
-This challenge must run only in the dedicated lab VM. Do not reuse this sudo policy on a real or shared server.
+These are reproducible templates. Compare them with the actual running VM before claiming the committed source is byte-for-byte identical to the live challenge. The VM disk, live flag, passwords and private keys must not be committed.
 
-## Known lab configuration
+## Lab-only safety boundary
 
-- Guest IP in the project notes: `10.10.20.50`
-- Isolated libvirt network: `zobi_c6_isolated`
-- Subnet: `10.10.20.0/24`
-- Challenge script path in the live VM: `/opt/zobi-c6/backup.sh`
-- Challenge account: `researcher`
-- The C5 PCAP is intended to reveal the participant's connection details. C5's PCAP and build materials are now integrated into the Member 4 branch; the live participant handoff into C6 still requires acceptance testing.
-- Do not commit passwords, private keys, or the live C6 flag.
+The combination of SETENV/PATH control and a privileged script that resolves tar through PATH is intentionally vulnerable. Use only in a disposable, isolated CTF VM. Never install this sudoers policy on a real, shared or production system.
 
-Verify the actual VM settings before recording the final demo. These values are environment-specific.
+## Administrator deployment outline
 
-## Intended learning outcomes
+1. Create/restore the dedicated Ubuntu guest and attach its NIC only to the approved isolated libvirt network.
+2. Create the researcher account using a local secret that is not committed to Git.
+3. Create /home/researcher/research with harmless challenge test files.
+4. Install backup.sh as root-owned and not writable by researcher; preserve the intended script path /opt/zobi-c6/backup.sh.
+5. Review researcher-sudoers.example with visudo -cf before installing it as /etc/sudoers.d/zobi-c6-researcher.
+6. Create /root/cure.txt with the actual flag from the CTFd source of truth; keep it root-owned and mode 0600.
+7. Run validate_setup.sh as root and save sanitised output.
+8. Demonstrate the intended path only inside the VM, then compare the recovered result with the CTFd-configured value.
+9. Revert to an approved snapshot or use the documented reset procedure and re-test.
 
-1. Inspect the current user and permitted sudo commands.
-2. Read the permitted script and identify unsafe command lookup.
-3. Explain how PATH search order can change which executable is invoked.
-4. Demonstrate the issue only inside the isolated challenge VM.
-5. Retrieve the challenge result using the intended path and submit it through CTFd.
-
-## Deployment files
-
-- `backup.sh` — intentionally vulnerable teaching script.
-- `researcher-sudoers.example` — example rule to be reviewed and installed by the VM administrator only.
-- `validate_setup.sh` — non-exploitative administrator checklist for the VM configuration.
-
-These files are templates for controlled lab deployment. They do not install a user, set a password, create a flag, or configure the VM network automatically.
-
-## Administrator setup checklist
-
-1. Create or restore the dedicated Ubuntu VM from the team's approved baseline.
-2. Configure its NIC only on the isolated `zobi_c6_isolated` network.
-3. Create the intended unprivileged `researcher` account using a locally managed secret that is not committed to Git.
-4. Install the challenge script as root-owned and not writable by the participant.
-5. Review the sudoers example with `visudo -cf` before installing any rule.
-6. Place the real flag in a root-owned, participant-unreadable file in the VM; never add it to this repository.
-7. Confirm the challenge is not reachable from outside the intended lab boundary.
-8. Run the setup validator and save sanitised output.
-9. Test the C5-to-C6 path using a clean participant account and record the live result.
-
-## Evidence to collect
-
-- Sanitised output of `ip addr` and `ip route` showing the isolated guest network.
-- `sudo -l` output with usernames/host details reviewed before sharing.
-- Ownership and permissions of the script and result file.
-- Evidence that the intended solve path works in the lab.
-- CTFd accepted submission and score.
-- Recovery/snapshot name and successful post-recovery validation.
-
-Do not mark the full C1-to-C6 integration as complete until C5 is finished and the handoff has been tested.
+Do not use the example sudoers policy outside the isolated challenge. Verify actual file permissions and sudo configuration: the appearance of tar by command name alone does not prove that PATH hijacking is exploitable.
