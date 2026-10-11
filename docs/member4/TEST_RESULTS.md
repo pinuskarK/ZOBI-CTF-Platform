@@ -26,7 +26,7 @@
 | M4-05 | C4 forensic artefact | Archive was prepared and ZIP contents checked | Confirm current CTFd attachment and participant solve |
 | M4-06 | C5 PCAP and handoff | Artefacts integrated; live acceptance pending | Do not claim end-to-end completion until the C5 live tests and handoff pass |
 | M4-07 | C6 intended path | Reported complete | Attach current VM and participant-path evidence |
-| M4-08 | Full C1-to-C6 clean-account run | PENDING live end-to-end acceptance | Re-run after C5 is complete; prove dependencies and progression |
+| M4-08 | Full C1-to-C6 clean-account run | PENDING live end-to-end acceptance | Re-run after C5 live acceptance passes; prove dependencies and progression |
 | M4-09 | Correct and incorrect answer handling | Needs consolidated evidence across all stages | Record accepted and rejected submissions without exposing live flags |
 | M4-10 | Reset/recovery | Requires execution evidence for each implemented reset method | Record exact approved procedure and post-reset retest |
 
@@ -50,7 +50,7 @@ Fill this table with actual run data. Never invent a PASS or backdate evidence.
 | Pending | C4 | — | Reported complete; evidence to attach | — | — |
 | Pending | C5 | — | ARTEFACT INTEGRATED; LIVE TEST PENDING | — | B-001 |
 | Pending | C6 | — | Reported complete; evidence to attach | — | — |
-| Pending | End-to-end C1→C6 | — | BLOCKED until C5 is complete | — | B-001 |
+| Pending | End-to-end C1→C6 | — | PENDING live C5 acceptance and full end-to-end run | — | B-001 |
 
 ## 5. Evidence hygiene
 
