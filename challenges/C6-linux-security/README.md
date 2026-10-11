@@ -20,10 +20,11 @@ The combination of SETENV/PATH control and a privileged script that resolves tar
 2. Create the researcher account using a local secret that is not committed to Git.
 3. Create /home/researcher/research with harmless challenge test files.
 4. Install backup.sh as root-owned and not writable by researcher; preserve the intended script path /opt/zobi-c6/backup.sh.
-5. Review researcher-sudoers.example with visudo -cf before installing it as /etc/sudoers.d/zobi-c6-researcher.
-6. Create /root/cure.txt with the actual flag from the CTFd source of truth; keep it root-owned and mode 0600.
-7. Run validate_setup.sh as root and save sanitised output.
-8. Demonstrate the intended path only inside the VM, then compare the recovered result with the CTFd-configured value.
-9. Revert to an approved snapshot or use the documented reset procedure and re-test.
+5. Install the script as root-owned and executable: sudo install -o root -g root -m 0755 backup.sh /opt/zobi-c6/backup.sh.
+6. Review the example first with visudo -cf researcher-sudoers.example. Only after review, install it as /etc/sudoers.d/zobi-c6-researcher with owner root:root and mode 0440, then validate the installed file with visudo -cf /etc/sudoers.d/zobi-c6-researcher.
+7. Create /root/cure.txt with the actual flag from the CTFd source of truth using a local editor; keep it root-owned and mode 0600. Do not put the live value in shell history or Git.
+8. Run the validator from this repository directory with sudo bash validate_setup.sh and save sanitised output.
+9. Demonstrate the intended path only inside the VM, then compare the recovered result with the CTFd-configured value.
+10. Revert to an approved snapshot or use the documented reset procedure and re-test.
 
 Do not use the example sudoers policy outside the isolated challenge. Verify actual file permissions and sudo configuration: the appearance of tar by command name alone does not prove that PATH hijacking is exploitable.
