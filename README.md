@@ -76,7 +76,7 @@ Run the read-only platform check:
 
 ## C6
 
-See docs/platform/C6-CURE-Research-Server.md. The VM disk, live flag and credentials are intentionally not stored in this repository.
+The C6 source templates are in challenges/C6-linux-security/ (backup script, sudoers example, and read-only setup validator). Review the lab-only warning before use, and compare the templates with the actual VM. See docs/platform/C6-CURE-Research-Server.md. The VM disk, live flag and credentials are intentionally not stored in this repository.
 
 ## Assignment completion status
 
