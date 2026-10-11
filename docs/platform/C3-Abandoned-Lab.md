@@ -34,18 +34,14 @@ nano .env
 
 Replace the placeholder values with the exact CTFd flag, a long random session secret, and a private C3_DEMO_PASSWORD for the seeded lab account. Do not commit `.env` or show its contents in screenshots.
 
-Create the network if it does not already exist:
+From the repository root, run the approved setup helper:
 
 ```bash
-docker network inspect zobi_challenges >/dev/null 2>&1 || \
-  docker network create --driver bridge --subnet 172.20.0.0/24 --gateway 172.20.0.1 zobi_challenges
+bash scripts/setup/create-challenge-network.sh
+sudo docker network inspect zobi_challenges
 ```
 
-Before using the network, inspect its configuration and confirm it matches the approved isolation design:
-
-```bash
-docker network inspect zobi_challenges
-```
+The helper creates an internal bridge on a clean setup and stops if an existing network is not internal. Do not delete an active network to make the check pass; plan a safe migration separately.
 
 Build and start the service:
 
