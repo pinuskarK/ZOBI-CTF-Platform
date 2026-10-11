@@ -12,7 +12,7 @@
 | C2 | Cryptography | Player reads the recovered message artefact and decodes the Caesar-shifted text. The decoded clue points to the web challenge in C3. | COMPLETE — per project owner | CTFd attachment, decoded output with secrets redacted, accepted submission screenshot |
 | C3 | Web security | Flask-based “Abandoned Lab / Research Portal” challenge packaged as a Docker service. The intended exercise demonstrates SQL injection against the challenge login and retrieval of the challenge result. Lab port previously used: 5003. | COMPLETE — per project owner | Container status, health response, intended solve-path screenshot, CTFd accepted submission, isolation/binding check |
 | C4 | Digital forensics | Player inspects the supplied forensic evidence bundle and correlates logs to identify the intended finding. The evidence archive was prepared as C4_evidence.zip with five evidence files. | COMPLETE — per project owner | CTFd attachment, archive listing, analysis commands/output, accepted submission screenshot |
-| C5 | Network analysis | Player analyses the supplied network capture to identify the required clue and intended C6 connection information. | ARTEFACTS INTEGRATED — LIVE ACCEPTANCE PENDING | Complete the PCAP artefact, validate intended solve path, then test the handoff to C6 |
+| C5 | Network analysis | Player analyses the supplied network capture to identify the required clue and intended C6 connection information. | ARTEFACTS INTEGRATED — LIVE ACCEPTANCE PENDING | Validate the integrated PCAP in Wireshark, test CTFd correct/incorrect submissions, then test the handoff to C6 |
 | C6 | Linux/system security | Isolated Ubuntu Server VM challenge. The intended exercise involves reviewing the allowed backup script and demonstrating the configured PATH lookup weakness in the authorised lab. Lab notes identify guest IP 10.10.20.50 on an isolated 10.10.20.0/24 network. | COMPLETE — per project owner | VM/network state, intended task output, accepted submission and completion evidence |
 
 ## 2. Platform and integration observations
@@ -24,7 +24,7 @@
 | M4-03 | C2 decode path | Reported complete | Confirm artefact is attached to CTFd and record current submission result |
 | M4-04 | C3 web service | Flask challenge and health endpoint have been tested in the lab | Attach service and participant evidence |
 | M4-05 | C4 forensic artefact | Archive was prepared and ZIP contents checked | Confirm current CTFd attachment and participant solve |
-| M4-06 | C5 PCAP and handoff | Artefacts integrated; live acceptance pending | Do not claim end-to-end completion until C5 is complete |
+| M4-06 | C5 PCAP and handoff | Artefacts integrated; live acceptance pending | Do not claim end-to-end completion until the C5 live tests and handoff pass |
 | M4-07 | C6 intended path | Reported complete | Attach current VM and participant-path evidence |
 | M4-08 | Full C1-to-C6 clean-account run | PENDING live end-to-end acceptance | Re-run after C5 is complete; prove dependencies and progression |
 | M4-09 | Correct and incorrect answer handling | Needs consolidated evidence across all stages | Record accepted and rejected submissions without exposing live flags |
@@ -48,7 +48,7 @@ Fill this table with actual run data. Never invent a PASS or backdate evidence.
 | Pending | C2 | — | Reported complete; evidence to attach | — | — |
 | Pending | C3 | — | Reported complete; evidence to attach | — | — |
 | Pending | C4 | — | Reported complete; evidence to attach | — | — |
-| Pending | C5 | — | NOT FINISHED | — | B-001 |
+| Pending | C5 | — | ARTEFACT INTEGRATED; LIVE TEST PENDING | — | B-001 |
 | Pending | C6 | — | Reported complete; evidence to attach | — | — |
 | Pending | End-to-end C1→C6 | — | BLOCKED until C5 is complete | — | B-001 |
 
