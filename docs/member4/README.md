@@ -5,7 +5,7 @@ This folder contains the integration plan, test results register, reset/recovery
 ## Current status
 
 - **Reported complete:** C1 Steganography, C2 Cryptography, C3 Web Security, C4 Digital Forensics, and C6 Linux/System Security.
-- **Not finished:** C5 Network Analysis.
+- **C5 artefacts integrated:** the PCAP, generator, source transmission and expected-answer file are now present in this branch. Live CTFd acceptance and C5-to-C6 handoff remain unverified.
 - **Overall end-to-end acceptance:** Pending C5. Do not describe the full C1-to-C6 sequence as complete until a clean participant account has followed the intended path through all six stages.
 
 The stage statuses above reflect the current project update. The documents distinguish implementation status from independently captured acceptance evidence.
@@ -36,7 +36,7 @@ The stage statuses above reflect the current project update. The documents disti
 | C2 | Cryptography | Decode the Caesar-shifted message and follow its clue | Reported complete |
 | C3 | Web security | Solve the intentionally vulnerable Flask Research Portal challenge | Reported complete |
 | C4 | Digital forensics | Analyse the provided forensic evidence archive | Reported complete |
-| C5 | Network analysis | Analyse the PCAP to find the intended clue for C6 | Not finished |
+| C5 | Network analysis | Analyse the PCAP to find the intended clue for C6 | Artefacts integrated; live acceptance pending |
 | C6 | Linux/system security | Complete the Linux challenge on the isolated Ubuntu VM through the intended path | Reported complete; C5 handoff pending |
 
 ## Run the non-destructive HTTP smoke test
@@ -84,7 +84,7 @@ This branch now includes the completed-stage artefacts needed for integration re
 - C3: Flask application, database initializer, Dockerfile, Compose file and requirements under `challenges/C3-web-security/`
 - C4: `access.log`, `deleted_message.txt`, `network.log`, `system.log` and `usb_history.txt` under `challenges/C4-digital-forensics/`
 
-C5's unfinished PCAP has intentionally not been included as a completed stage. C6 remains a VM-based challenge; the VM itself and secrets are not stored in this repository.
+C5's PCAP and generator have now been integrated from the Member 2 branch. The live participant download, flag submission and handoff still require acceptance testing. C6 remains a VM-based challenge; the VM itself and secrets are not stored in this repository.
 
 Additional Member 4 files:
 - `docs/member4/STAGE-INTEGRATION-GUIDE.md` — exact stage artefacts, current lab endpoints, C3 commands, expected integration behaviour and demonstration checklist.
@@ -103,4 +103,4 @@ Then run the service smoke test:
 python3 scripts/testing/smoke_test.py
 ```
 
-A passing artifact check does not mean the runtime challenges or full C1-to-C6 sequence have passed acceptance testing. C5 must be finished before the full flow can be verified.
+A passing artifact check does not mean the runtime challenges or full C1-to-C6 sequence have passed acceptance testing. C5's live attachment, answer validation and C5-to-C6 handoff must pass before the full flow can be verified.
