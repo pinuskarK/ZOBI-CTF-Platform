@@ -14,7 +14,7 @@ import urllib.request
 
 checks: list[tuple[str, str]] = [
     ("Flag API", os.getenv("ZOBI_FLAG_API_URL", "http://127.0.0.1:8080").rstrip("/") + "/"),
-    ("C3 health", os.getenv("ZOBI_C3_URL", "http://192.168.8.188:5003").rstrip("/") + "/health"),
+    ("C3 health", os.getenv("ZOBI_C3_URL", "http://127.0.0.1:5003").rstrip("/") + "/health"),
 ]
 ctfd_url = os.getenv("ZOBI_CTFD_URL")
 if ctfd_url:
