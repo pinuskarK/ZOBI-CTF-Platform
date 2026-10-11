@@ -1,7 +1,11 @@
 import os
 import sqlite3
 
-DB_PATH = "/app/data/research.db"
+DB_PATH = os.environ.get("C3_DB_PATH", "/app/data/research.db")
+USERNAME = os.environ.get("C3_DEMO_USERNAME", "researcher")
+PASSWORD = os.environ.get("C3_DEMO_PASSWORD")
+if not PASSWORD:
+    raise RuntimeError("C3_DEMO_PASSWORD must be set in the environment")
 
 os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
 
@@ -13,10 +17,9 @@ with sqlite3.connect(DB_PATH) as connection:
             password TEXT NOT NULL
         )
     """)
-
     connection.execute(
         "INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)",
-        ("researcher", "LabAccess-Temporary-2026")
+        (USERNAME, PASSWORD),
     )
 
 print("C3 database initialized successfully.")
