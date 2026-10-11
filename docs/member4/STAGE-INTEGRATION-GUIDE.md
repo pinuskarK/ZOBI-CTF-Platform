@@ -107,6 +107,8 @@ Before integration can be accepted:
 
 **Deployment details from the current lab notes:** Ubuntu Server guest `10.10.20.50`, on the isolated libvirt network `10.10.20.0/24`. The intended challenge investigates an allowed backup script and a PATH lookup weakness. The VM is separate from the participant-facing CTFd service.
 
+The integrated repository also contains `challenges/C6-linux-security/backup.sh`, `researcher-sudoers.example`, and `validate_setup.sh` as lab-only rebuild templates. Compare them with the actual guest before claiming they match the live VM. The validator checks configuration and file permissions; it does not exploit the guest or reveal the flag.
+
 A host-to-guest SSH route was previously used from Windows through the central host:
 
 ```powershell
