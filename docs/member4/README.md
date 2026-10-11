@@ -24,6 +24,7 @@ The stage statuses above reflect the current project update. The documents disti
 |---|---|
 | INTEGRATION_TEST_PLAN.md | End-to-end acceptance plan, negative tests, C5 live-acceptance gate and reset checks |
 | C5-INTEGRATION-STATUS.md | C5 artefact paths, build, manual solve, and pending live acceptance evidence |
+| run_repository_checks.sh | Combined repository, C3 unit-test, C5 PCAP and optional live-smoke runner |
 | TEST_RESULTS.md | Stage-by-stage implementation status, known observations, evidence checklist and blocker log |
 | RESET-RECOVERY.md | Safe recovery procedures and execution record |
 | RISK-REGISTER.md | Integration/security/recovery risks and required verification |
@@ -95,6 +96,9 @@ Additional Member 4 files:
 Run the repository integrity test from the repository root:
 
 ```bash
+bash scripts/testing/run_repository_checks.sh
+
+# Individual checks, if needed:
 python3 scripts/testing/check_artifacts.py
 python3 scripts/testing/validate_c5_pcap.py  # requires Scapy
 ```
