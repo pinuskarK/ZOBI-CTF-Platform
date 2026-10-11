@@ -48,6 +48,8 @@ REQUIRED = {
     "Member 4 stage integration guide": "docs/member4/STAGE-INTEGRATION-GUIDE.md",
     "KVM operations guide": "infrastructure/kvm/c6-linux-security/README.md",
     "Firewall policy guide": "infrastructure/firewall/README.md",
+    "Challenge network setup helper": "scripts/setup/create-challenge-network.sh",
+    "Challenge network guide": "infrastructure/docker/network/README.md",
 }
 
 def main() -> int:
