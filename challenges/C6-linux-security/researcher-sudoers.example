@@ -1,0 +1,4 @@
+# EXAMPLE ONLY — install only inside the disposable ZOBI C6 VM.
+# Review with visudo -cf before installation. Never use on a real/shared host.
+# The SETENV/PATH behaviour is intentionally vulnerable for the CTF challenge.
+researcher ALL=(root) SETENV: NOPASSWD: /opt/zobi-c6/backup.sh
