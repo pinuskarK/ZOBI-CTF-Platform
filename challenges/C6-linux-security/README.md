@@ -18,7 +18,7 @@ This challenge must run only in the dedicated lab VM. Do not reuse this sudo pol
 - Subnet: `10.10.20.0/24`
 - Challenge script path in the live VM: `/opt/zobi-c6/backup.sh`
 - Challenge account: `researcher`
-- The C5 PCAP is intended to reveal the participant's connection details. C5 is currently unfinished, so the full participant handoff into C6 is not yet verified.
+- The C5 PCAP is intended to reveal the participant's connection details. C5's PCAP and build materials are now integrated into the Member 4 branch; the live participant handoff into C6 still requires acceptance testing.
 - Do not commit passwords, private keys, or the live C6 flag.
 
 Verify the actual VM settings before recording the final demo. These values are environment-specific.
@@ -49,7 +49,7 @@ These files are templates for controlled lab deployment. They do not install a u
 6. Place the real flag in a root-owned, participant-unreadable file in the VM; never add it to this repository.
 7. Confirm the challenge is not reachable from outside the intended lab boundary.
 8. Run the setup validator and save sanitised output.
-9. After C5 is finished, test the C5-to-C6 path using a clean participant account.
+9. Test the C5-to-C6 path using a clean participant account and record the live result.
 
 ## Evidence to collect
 
