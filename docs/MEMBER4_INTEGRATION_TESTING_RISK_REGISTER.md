@@ -1,231 +1,123 @@
-# Member 4 — Integration, Testing, Validation & Risk Register
+# Member 4 — Integration, Testing, Validation and Risk Register
 
-**Owner:** Siriwardhana G.K.KG (Member 4)  
-**Student ID in report:** IT24103096  
+**Owner:** Member 4 — Integration, Testing & Documentation  
 **Project:** ZOBI — Zombie Outbreak Breach Investigation  
 **Module:** IE3132 Penetration Testing  
-**Branch:** `member-4-integration-testing-docs`
+**Branch:** member-4-integration-testing-docs
 
-> This document follows the final report's Member 4 scope: test strategy and acceptance criteria, technical/security/implementation/deployment risk analysis, mitigation recommendations, challenge review, validation documentation, and integration of all members' work. It distinguishes checks observed in the implementation session from planned tests that still require execution.
+This document consolidates Member 4's test strategy, current implementation evidence, risk register, and final acceptance gate. It separates repository artefact presence and previously observed setup checks from tests that still require execution on the live CTFd environment.
 
-## 1. Responsibilities from the final report
+## 1. Member 4 responsibilities
 
-Member 4's documented responsibilities are:
+1. Define the test strategy and acceptance criteria for the CTF platform.
+2. Review stage integration, difficulty progression, challenge clues, and dependency rules.
+3. Track defects, mitigations, retests, reset/recovery and design deviations.
+4. Verify correct/incorrect answer handling and record evidence.
+5. Maintain the final integration and risk documentation for the team.
 
-1. Develop the testing strategy and validation criteria for the CTF Box.
-2. Participate in risk analysis for technical, security, implementation, and deployment risks.
-3. Recommend mitigations to improve reliability and security.
-4. Review Member 2 and Member 3 challenge designs for consistent flow, difficulty progression, technical requirements, and compliance with the CTF Box requirements.
-5. Prepare testing, validation, and risk-analysis documentation.
-6. Integrate the report contributions from all four members.
+## 2. Intended challenge chain
 
-## 2. System under test
-
-ZOBI contains six sequential challenges across six domains:
-
-| Stage | Challenge | Domain | Main validation goal |
+| Stage | Challenge | Domain | Acceptance focus |
 |---|---|---|---|
-| C1 | The Photograph | Steganography | Extract hidden content, recover the stage flag, and obtain the C2 clue |
-| C2 | Lab Assistant's Message | Cryptography | Decode the Caesar-cipher message, validate the flag, and obtain the C3 clue |
-| C3 | The Abandoned Lab | Web Security | Demonstrate the intentionally vulnerable SQL-injection login in the lab, access the research files, and recover the flag/clue for C4 |
-| C4 | What happened here? | Digital Forensics | Examine the supplied evidence, identify relevant artefacts, recover the flag/clue for C5 |
-| C5 | The Last Transmission | Networking / Packet Analysis | Inspect the supplied PCAP, recover the expected flag/clue for C6 |
-| C6 | The CURE research Server | Linux/System Security | Access the isolated VM, complete the intended Linux-security task, and recover the final flag |
+| C1 | The Photograph | Steganography | Extract the hidden message and follow the intended clue. |
+| C2 | Lab Assistant's Message | Cryptography | Decode the message and follow the intended clue to C3. |
+| C3 | The Abandoned Lab | Web Security | Demonstrate the intentional SQL injection in the isolated lab and recover the configured result. |
+| C4 | What happened here? | Digital Forensics | Correlate supplied logs and recover the intended result. |
+| C5 | The Last Transmission | Network analysis | Analyse the integrated PCAP and recover the intended result and next-stage clue. |
+| C6 | The CURE Research Server | Linux/System Security | Complete the intended task inside the isolated VM. |
 
-The intended dependency chain is C1 → C2 → C3 → C4 → C5 → C6. Test both that each successful submission unlocks the next stage and that users cannot bypass dependencies where sequential access is required.
+Expected progression is C1 → C2 → C3 → C4 → C5 → C6. A repository directory or challenge listing alone does not prove that CTFd prerequisites are configured or enforced.
 
-## 3. Test strategy and acceptance criteria
+## 3. Current repository status
 
-### T1 — Platform availability and service health
+- C1 image, C2 message, C3 application source, C4 evidence files, and C5 PCAP/build materials are present in this branch.
+- C6 is a VM-based challenge. The VM disk and live environment state are managed outside the repository.
+- Member 4's stage guide, test plan, test-results register, recovery runbook, risk register, design comparison, artifact checker, HTTP smoke test, PCAP validator and combined check runner are committed.
+- The C5 repository artefacts are integrated; live CTFd attachment, answer validation and C5-to-C6 handoff remain pending evidence.
+- The owner reports C1, C2, C3, C4 and C6 as implemented. Independently captured acceptance evidence should be attached before presenting each as fully retested.
 
-**Procedure**
-- Open CTFd at the configured participant URL.
-- Check that the participant can log in and see the expected challenge list.
-- Check the Docker service, challenge services, flag API, and C6 VM status on the host.
-- Check required ports and URLs from the participant side.
+## 4. Previously observed platform checks
 
-**Pass criteria**
-- The platform loads without service errors.
-- Each required challenge resource is reachable from the intended network.
-- A failed or stopped service is detected and recorded rather than silently treated as a successful challenge.
-
-### T2 — Challenge artifact and clue validation
-
-For each challenge, confirm that the attachment exists, downloads successfully, matches the intended challenge, and contains the evidence described in the report. Confirm that each recovered clue points to the correct next stage.
-
-**Pass criteria**
-- C1 image and hidden content are usable.
-- C2 text file decodes to readable instructions and the intended stage flag.
-- C3 portal behaves as designed in the isolated lab and contains the expected research evidence.
-- C4 evidence archive/logs are present and support the intended investigation.
-- C5 PCAP opens in a packet-analysis tool and contains the intended traffic/evidence.
-- C6 VM boots, provides the intended account and vulnerable configuration, and contains the intended flag file.
-
-### T3 — Flag validation negative and positive tests
-
-For each stage:
-1. Submit the verified correct flag.
-2. Confirm the platform accepts it and marks the stage complete.
-3. Submit a deliberately incorrect value.
-4. Confirm it is rejected and does not grant completion.
-5. Repeat after a reset where supported.
-
-**Pass criteria**
-- Correct flags are accepted.
-- Incorrect flags are rejected.
-- A challenge is not marked complete merely because a request was submitted.
-- Flag comparison is not unintentionally altered by whitespace or casing rules unless those rules are documented.
-
-### T4 — Dependency and progression tests
-
-- Complete C1 and confirm C2 becomes available.
-- Repeat through C6 in order.
-- Attempt to access a later stage before its prerequisite is completed.
-- Confirm the observed behavior matches the intended CTFd dependency configuration.
-
-**Pass criteria**
-- The expected next challenge becomes available after successful completion.
-- Restricted stages remain restricted when prerequisites are not met.
-- Hints, URLs, credentials, files, and stage names agree across challenge pages and report documentation.
-
-### T5 — Network isolation and access-control tests
-
-- From the Ubuntu host, confirm the C6 VM's address and intended SSH port are reachable.
-- Confirm VNC listens only on host loopback and use SSH port forwarding for remote graphical access.
-- Inspect libvirt and Docker network definitions and the host firewall.
-- From each relevant network, test only the ports that are supposed to be accessible and record both allowed and blocked paths.
-- Confirm database services, if present, are not exposed publicly.
-
-**Pass criteria**
-- Required routes work.
-- Unnecessary inbound access is denied.
-- Intentionally vulnerable challenges remain isolated from unrelated services and the host management plane.
-- The evidence includes the commands/results and the source/destination network for each test.
-
-### T6 — Permissions and challenge safety
-
-- Review C6 account privileges and the intended vulnerable script/configuration.
-- Confirm privilege escalation, if intended by the challenge, is limited to the lab VM.
-- Confirm participants do not receive unintended access to the host or unrelated challenge resources.
-- Check file ownership and permissions on challenge files and flag locations.
-
-**Pass criteria**
-- The challenge is solvable using the documented path.
-- Permissions are neither so restrictive that the intended task is impossible nor so broad that the challenge exposes unrelated systems.
-- Host and guest privilege boundaries are documented.
-
-### T7 — Reset and recovery
-
-- Capture a known-good initial state.
-- Complete or alter a challenge in the approved test environment.
-- Run the documented reset/recovery procedure.
-- Repeat the original test after reset.
-
-**Pass criteria**
-- The challenge returns to its intended initial state.
-- Attachments, service health, flags, permissions, and dependencies remain correct.
-- The recovery procedure is documented and reproducible.
-
-### T8 — Resource and reliability checks
-
-- Record CPU, RAM, disk, and service usage during normal operation.
-- Observe logs during service startup, challenge submission, and failure.
-- Conduct a small controlled multi-user smoke test if the platform is expected to support concurrent participants.
-- Do not claim the planned 10–20 participant capacity or the 50+ scalability path has been demonstrated without measured load-test evidence.
-
-**Pass criteria**
-- No unexpected service crashes occur in the tested workload.
-- Resource limits and capacity assumptions are documented.
-- Logs provide enough information to diagnose a failure without exposing secrets or flags unnecessarily.
-
-## 4. Test evidence actually observed so far
-
-These are evidence-backed checks from the implementation session. They are not a substitute for the complete test plan above.
-
-| ID | Test performed | Observed result | Status |
-|---|---|---|---|
-| E1 | Check Docker version on Ubuntu host | Docker 29.1.3 reported | Passed |
-| E2 | Docker smoke test | `hello-world` completed successfully | Passed |
-| E3 | Open CTFd | `http://192.168.8.188:8081/` was reported accessible during setup | Basic availability observed; full participant workflow not yet evidenced |
-| E4 | Check Flask flag API health endpoint | API returned `{"service":"ZOBI CTF Flag Validation API","status":"running"}` | Passed |
-| E5 | Submit a test value to the Flask API | Response indicated `Correct flag! True` | Passed for that test value only |
-| E6 | Check flag API systemd service | `zobi-flag-api.service` observed enabled and active | Passed at time checked |
-| E7 | Check C6 VM state | `zobi-c6-cure` was running under libvirt | Passed at time checked |
-| E8 | Check host-to-guest connectivity | Host ping to `10.10.20.50` received 4/4 replies | Passed |
-| E9 | Check C6 SSH port from host | `nc -zv -w 3 10.10.20.50 22` succeeded | Passed |
-| E10 | Check VNC listener | QEMU listened on `127.0.0.1:5900` | Passed at time checked |
-| E11 | Use TigerVNC via SSH tunnel | User reported logging into the C6 VM through TigerVNC | Basic console access observed |
-| E12 | Inspect C6 challenge script | `/opt/zobi-c6/backup.sh` exists and calls `tar` by command name | File inspection completed; intended escalation path not fully validated |
-| E13 | Search for C6 flag filename | `/root/cure.txt` found by `find` | File exists; its contents and CTFd submission are not evidenced here |
-| E14 | Inspect C5 PCAP artifact | `last_transmission.pcap` was identified as an 8,538-byte PCAP with 74 packets | File format/artifact checked; full solve and flag submission need verification |
-| E15 | Verify all six challenge flags and progression in CTFd | No complete end-to-end result recorded | Not yet verified |
-
-**Important:** do not convert a proposed test into a “passed” result in the report. Add date, tester, exact command or action, expected result, actual result, screenshot/log evidence, and pass/fail status when each outstanding test is performed.
-
-## 5. Risk register and mitigation recommendations
-
-Use the following register to track the risks identified in the final report.
-
-| ID | Risk | Likelihood / impact | Recommended mitigation | Verification evidence |
-|---|---|---|---|---|
-| R1 | Challenge service failure | Medium / High | Add service-health checks, restart policy where suitable, and a pre-demo checklist | Service status and restart/recovery result |
-| R2 | Incorrect flag validation | Medium / High | Test known-correct and known-incorrect flags for every stage; verify CTFd and API behavior separately | Positive and negative submission results |
-| R3 | Network connectivity failure | Medium / High | Document required routes and ports; test from the participant side and host side | Connectivity matrix and command output |
-| R4 | Dependency or artifact missing | Medium / High | Check every attachment, package, URL, account, and service before demo; keep a dependency inventory | Artifact checklist and successful download/open |
-| R5 | Insufficient environment isolation | Low–Medium / Critical | Use separate Docker/libvirt networks, restrict inbound traffic, keep VNC on loopback, and avoid exposing vulnerable services publicly | Firewall rules, network inspection, allowed/blocked connection results |
-| R6 | Improper permissions / unintended privilege | Medium / High | Audit user and sudo permissions, file ownership, and challenge-only escalation; avoid broad guest privileges unless explicitly required for the challenge | `sudo -l`, file permissions, documented intended path |
-| R7 | Challenge state corruption | Medium / High | Provide a known-good snapshot/backup and a tested reset/recovery procedure | Before/after state comparison |
-| R8 | Insufficient CPU, RAM, disk, or network capacity | Medium / Medium–High | Monitor resource usage, set reasonable limits, and measure a controlled concurrent workload | Resource snapshots and load-test results |
-| R9 | Inadequate logging or diagnostic evidence | Medium / Medium | Centralize relevant service logs, preserve timestamps, and avoid logging secrets | Example logs for startup, submission, and failure |
-| R10 | Report/design differs from deployed configuration | Medium / High | Keep IPs, host OS versions, ports, challenge names, dependencies, and diagrams synchronized with the running system | Configuration inventory reviewed against report |
-| R11 | Backup or recovery failure | Medium / High | Define backup contents, schedule, retention, and restore procedure; test an actual restore | Restore log and successful post-restore smoke test |
-| R12 | Demo or deployment setup failure | Medium / High | Rehearse the full C1→C6 path, confirm services/attachments and VNC/SSH access, and keep a recovery checklist | Dated rehearsal checklist and evidence |
-
-Likelihood and impact values are preliminary qualitative ratings for prioritization, not measured probabilities. Review them against the group's final risk-scoring method if one is defined elsewhere in the report.
-
-## 6. Challenge integration review checklist
-
-For each challenge submitted by Members 2 and 3, verify:
-
-- [ ] Challenge title, domain, difficulty, and stage number match the report.
-- [ ] Scenario and evidence fit the ZOBI research-facility storyline.
-- [ ] Attachment path/name matches the instructions shown to participants.
-- [ ] Intended flag exists and exactly matches the value configured in CTFd.
-- [ ] The clue gives the right information for the next stage without revealing an unrelated answer.
-- [ ] Required tools, accounts, URLs, packages, and services are available.
-- [ ] The intended solve path works from a clean/reset state.
-- [ ] Hints are useful and do not contradict the challenge.
-- [ ] Dependency/unlock behavior matches C1 → C2 → C3 → C4 → C5 → C6.
-- [ ] Reset/recovery instructions are available.
-- [ ] Risky services remain confined to the intended lab environment.
-
-## 7. Current integration findings and follow-up items
-
-1. **Platform smoke tests have evidence** for Docker, the Flask API, the C6 VM, host-to-guest connectivity, and VNC console access.
-2. **Full end-to-end challenge testing remains outstanding** until all six correct/incorrect flag submissions, attachment checks, and dependency unlocks have been recorded.
-3. The implementation host was observed as Ubuntu Server 26.04.1 LTS, while the design report specifies Ubuntu Server 20.04. Document the actual version consistently.
-4. The C6 guest has address `10.10.20.50` on the isolated `zobi_c6_isolated` network. Direct Windows SSH timed out, while host-to-guest SSH worked. Keep the intended isolation and VNC-over-SSH arrangement documented.
-5. C6 `/root/cure.txt` was found by filename search, but the actual content and successful CTFd submission have not been included in the recorded test evidence.
-6. Verify that C4 is present and correctly linked; the previous platform progress note specifically reported C1, C2, C3, C5, and C6 as added, so C4 should not be assumed complete without checking.
-7. The report proposes logging, backups, reset/recovery, firewall rules, PostgreSQL, nginx, and resource/scalability planning. Mark these as implemented only after checking the actual configuration and collecting evidence.
-
-## 8. Final test summary template
-
-Complete this table after the rehearsal. Leave the result as **Pending** until the test is actually run.
-
-| Test area | Result | Evidence / date |
+| Check | Recorded observation | Scope / limitation |
 |---|---|---|
-| C1 attachment, extraction, correct/incorrect flag | Pending | Add screenshot/log |
-| C2 decoding, correct/incorrect flag | Pending | Add screenshot/log |
-| C3 intended SQL-injection path, research files, flag | Pending | Add screenshot/log |
-| C4 evidence analysis and flag | Pending | Add screenshot/log |
-| C5 PCAP analysis and flag | Pending | Add screenshot/log |
-| C6 intended task and flag submission | Pending | Add screenshot/log |
-| C1→C6 dependency progression | Pending | Add full walkthrough evidence |
-| Service restart and failure recovery | Pending | Add command output |
-| Reset/restore | Pending | Add before/after evidence |
-| Network isolation and port exposure | Pending | Add configuration and connection tests |
-| Backup/restore and logging | Pending | Add evidence |
-| Resource / concurrent-user test | Pending | Add measurements |
+| Docker | Docker 29.1.3 reported; hello-world completed | Runtime smoke test only. |
+| CTFd | Participant URL at port 8081 was reported accessible during setup | Does not prove every challenge or progression rule works. |
+| Custom Flask flag API | Health endpoint returned service/status JSON; a test POST was accepted | Does not prove CTFd is integrated with the API or that all CTFd flags work. |
+| API service | zobi-flag-api.service was observed enabled/active | State may have changed; recheck before demo. |
+| C6 VM | zobi-c6-cure was running | Does not prove the intended challenge path or final submission. |
+| C6 network | Guest 10.10.20.50/24 was attached to zobi_c6_isolated via virbr-c6 | Complete isolation still requires an allowed/blocked connection matrix. |
+| C6 SSH | Host-to-guest TCP 22 was reachable | Does not prove participant-to-guest access is correctly restricted. |
+| C6 VNC | Listener observed at host loopback 127.0.0.1:5900 and used through SSH forwarding | Recheck current listener and keep it off the LAN. |
+| C5 PCAP | Source artefact is integrated into this branch | Manual Wireshark solve and CTFd submission remain pending. |
 
-**Completion rule:** the platform is ready for final demonstration only after the critical end-to-end path, flag validation, service availability, and isolation checks have been run and their results recorded.
+## 5. Acceptance test plan
+
+| ID | Test | Expected result | Current status |
+|---|---|---|---|
+| INT-01 | Open CTFd as a clean participant | Portal loads and intended challenge list is visible | Recheck live |
+| INT-02 | Download and solve C1 | Intended extraction works and configured answer is accepted | Evidence pending |
+| INT-03 | Decode and solve C2 | Message produces the intended clue and configured answer is accepted | Evidence pending |
+| INT-04 | Solve C3 in the lab | Intended SQL injection works only in the lab; correct answer accepted | Source tests added; live acceptance pending |
+| INT-05 | Analyse C4 evidence | Supplied evidence supports the intended conclusion | Evidence pending |
+| INT-06 | Analyse C5 PCAP in Wireshark | Intended stream and next-stage clue are recovered | Artefact integrated; manual test pending |
+| INT-07 | Follow C5 clue to C6 | Clean participant can reach the intended guest path only | Pending |
+| INT-08 | Complete C6 and submit result | Intended task works and CTFd records completion | Evidence pending |
+| INT-09 | Submit incorrect answers | Incorrect answers are rejected without awarding completion | Pending across all stages |
+| INT-10 | Test stage dependencies | Only intended next stage is unlocked; premature access is blocked | Pending |
+| INT-11 | Run reset/recovery | Documented baseline is restored and smoke tests pass | Pending |
+| INT-12 | Verify network isolation | Required paths work; unnecessary paths are blocked | Pending |
+| INT-13 | Capture resource usage and logs | CPU/RAM/disk and diagnostic evidence are recorded without secrets | Pending |
+
+## 6. Risk register
+
+| ID | Risk | Priority | Mitigation | Evidence to close |
+|---|---|---|---|---|
+| R-01 | Later-stage answer exposed early | High | Keep organiser files separate from participant attachments; inspect repository and responses | Clean-account shortcut test and access review |
+| R-02 | C6 reachable without intended C5 step | High | Verify CTFd prerequisites and network access using a clean participant | C5-to-C6 walkthrough and denied-shortcut evidence |
+| R-03 | Correct/incorrect answer handling is inconsistent | High | Test both outcomes at every stage and compare with configured values | Submission screenshots/logs for each stage |
+| R-04 | Vulnerable service is exposed beyond the lab | Critical | Restrict bindings/firewall and inspect Docker/libvirt networks | Sanitised firewall and allowed/blocked connection matrix |
+| R-05 | Reset destroys scores or challenge state | High | Preserve backups; use approved reset or VM snapshot procedures | Recorded restore and post-restore test |
+| R-06 | Lab secrets or flags are accidentally exposed | High | Keep organiser files restricted, redact evidence, rotate exposed lab secrets | Repository and evidence review |
+| R-07 | Service fails after restart/reboot | Medium | Use health checks and a documented recovery procedure | Restart/reboot test and healthy response |
+| R-08 | Report differs from live configuration | Medium | Reconcile OS, ports, IPs, resource allocation and dependencies with the running host | Dated configuration inventory and change record |
+| R-09 | Resource capacity is assumed rather than measured | Medium | Capture CPU/RAM/disk and run a controlled workload if required | Dated measurements and workload notes |
+| R-10 | Full progression is claimed without evidence | High | Keep final acceptance pending until a clean C1-to-C6 run is captured | Full walkthrough and test log |
+
+Likelihood/impact are qualitative priorities for review, not measured probabilities.
+
+## 7. Design differences to reconcile
+
+- The original design report specified Ubuntu Server 20.04; the host observed during setup reported Ubuntu Server 26.04.1 LTS. Record the actual version and explain the compatibility/reproducibility impact.
+- The CTFd portal was observed on host port 8081, while the application and reverse-proxy services use separate internal ports. Confirm live bindings and firewall policy.
+- The custom Flask flag API has been tested separately. Do not claim CTFd uses it for all submissions unless the actual integration is inspected and demonstrated.
+- The C6 VM's actual OS release, CPU/RAM/disk allocation, permissions and reset method must be confirmed on the guest.
+- Record each accepted deviation with the original requirement, actual state, reason, impact, approver and evidence.
+
+## 8. Evidence rules
+
+For each test, record the test ID, date/time, tester, branch commit, environment, exact action/command, expected result, actual result, PASS/FAIL/BLOCKED/NOT RUN, evidence path, and related defect/fix. Redact passwords, tokens and live answers from screenshots and logs.
+
+Run repository-only checks from the repository root:
+
+    bash scripts/testing/run_repository_checks.sh
+
+Run the live HTTP smoke test only on the authorised lab host:
+
+    ZOBI_RUN_LIVE_SMOKE=1 bash scripts/testing/run_repository_checks.sh
+
+The combined runner checks repository files, C3 unit tests and C5 PCAP structure when dependencies are available. Its live smoke test checks HTTP reachability only. It does not submit flags, test CTFd progression, verify isolation or execute reset/recovery.
+
+## 9. Final acceptance gate
+
+- [ ] C1–C6 attachments match the approved source artefacts.
+- [ ] Every stage's intended solve path is reproducible.
+- [ ] Correct answers are accepted and incorrect answers rejected at all stages.
+- [ ] C1 → C2 → C3 → C4 → C5 → C6 progression is demonstrated with a clean account.
+- [ ] C5-to-C6 handoff is tested without administrator-only shortcuts.
+- [ ] Vulnerable services and the C6 VM remain within the approved lab boundary.
+- [ ] Reset/recovery is executed and a post-reset smoke test passes.
+- [ ] Logs and CPU/RAM/disk evidence are captured.
+- [ ] All design differences from Assignment 01 are explained.
+- [ ] The final video shows the real environment and each member's own work.
+
+**Completion rule:** do not mark the overall platform fully integrated until the live tests above have actual results and saved evidence.
