@@ -16,9 +16,10 @@ This branch includes:
 - C3 Flask/SQLite Docker application source and configuration.
 - C4 forensic log artefacts.
 - C5 participant PCAP, Scapy generator, organiser transmission source, and expected-answer file.
-- C6 VM documentation (the actual VM disk and secrets remain outside Git).
+- C6 backup-script template, sudoers example, setup validator and VM documentation (the actual VM disk and live flag remain outside Git).
 - Artifact integrity, HTTP smoke-test and C5 PCAP validation scripts.
 - Member 4 integration plan, test results, risk and recovery documents.
+- KVM operations and firewall policy guides.
 
 ## Run repository checks
 
