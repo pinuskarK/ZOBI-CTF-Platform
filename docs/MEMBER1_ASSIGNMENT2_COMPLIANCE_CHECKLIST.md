@@ -20,9 +20,9 @@ This file audits the Member 1 branch against the IE3132 Assignment 02 requiremen
 | Demonstrate logging | Logging directory exists in the project workspace | Not enough evidence to claim centralized logging is configured and working |
 | Demonstrate reset/recovery | A backups directory exists; no repeatable restore result was recorded | Not yet verified |
 | Show resource usage | Design resource estimates exist in the Assignment 01 report | Actual runtime resource measurements still needed |
-| Provide reproducible setup/run/reset instructions | This branch has architecture notes; no verified clean deployment guide/compose bundle is evidenced by this audit | Add/verify complete setup, run and reset guide |
+| Provide reproducible setup/run/reset instructions | This branch has architecture notes; no verified clean deployment guide/compose bundle is evidenced by this audit | C3 now has a documented local setup and unit-test guide; the full CTFd deployment remains external to this repository and still needs a clean-host rehearsal |
 | Six working stages, 4+ domains, required progression | Six stage names are listed, but C4, all dependencies and the complete end-to-end run are not fully evidenced | Not yet fully verified |
-| At least one self-developed solver/exploit script per member | Member 1 platform setup is documented; a Member 1 authored operational validation/reset script is not evidenced in this audit | Add/identify and demonstrate relevant original script |
+| At least one self-developed solver/exploit script per member | Member 1 platform setup is documented; a read-only Member 1 host inventory script and C3 automated unit tests are now committed; run them and demonstrate their relevance | Add/identify and demonstrate relevant original script |
 
 ## Actual environment and design differences
 
@@ -70,7 +70,7 @@ Record the date, expected result, actual result and screenshot/log for each test
 
 ## Final pre-demonstration checklist
 
-- [ ] A second person can deploy the submitted project using only the repository README.
+- [ ] A second person can deploy the C3 service using the documented local setup; full CTFd deployment from a clean host still requires the external deployment configuration.
 - [ ] All six stages and their attachments are present in CTFd.
 - [ ] Correct and incorrect flags have been tested for every stage.
 - [ ] C1→C6 progression and blocked premature access have been tested.
@@ -79,8 +79,8 @@ Record the date, expected result, actual result and screenshot/log for each test
 - [ ] Logs are visible for service startup and validation events without leaking secrets.
 - [ ] Reset/recovery was run and a post-reset smoke test passed.
 - [ ] CPU, memory and disk usage were captured; capacity claims are labelled as measured or estimated.
-- [ ] Member 1 demonstrates deployment, architecture, flag validation, isolation, reset and resource usage in the real running environment.
+- [ ] Run C3 unit tests and Member 1 inventory script; capture live deployment, flag validation, isolation, reset and resource evidence in the real environment.
 
 ## Completion statement
 
-The repository now contains Member 1's implementation record and this Assignment 02 compliance checklist. The documented smoke tests are useful evidence, but this checklist intentionally leaves end-to-end flag testing, clean deployment, complete isolation verification, logging, reset/recovery, and measured resource use open until actual test results are captured.
+The repository now contains Member 1's implementation record, compliance checklist, root setup guide, C3 environment template and unit tests, C6 VM notes, and a read-only host inventory script. The documented smoke tests are useful evidence, but this checklist intentionally leaves end-to-end flag testing, clean deployment, complete isolation verification, logging, reset/recovery, and measured resource use open until actual test results are captured.
