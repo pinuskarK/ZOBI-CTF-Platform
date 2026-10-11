@@ -160,3 +160,34 @@ Also test, in the CTFd browser, the full C1→C6 path with a correct flag and an
 - [ ] Confirm the exact firewall rules and network isolation with documented tests.
 - [ ] Demonstrate a reset/recovery procedure and validate restored state.
 - [ ] Confirm logging, backup scheduling/restoration, resource limits, and any nginx/PostgreSQL services before describing them as implemented.
+
+
+## 8. Repository implementation updates — 2026-10-11
+
+The C3 repository component now includes:
+
+- A Flask application that intentionally retains the SQL injection weakness for the isolated teaching challenge.
+- Required environment variables for the C3 flag and Flask session secret; neither has a hard-coded fallback in the application.
+- A Compose configuration with a loopback-only default host binding, persistent SQLite volume, and HTTP health check.
+- A safe environment template at `challenges/C3-web-security/.env.example`; the real `.env` file is excluded by the challenge directory's `.gitignore`.
+- Unit tests at `challenges/C3-web-security/tests/test_app.py` for health, unauthenticated archive access, ordinary invalid login, intended SQLi behaviour, and logout.
+- A full C3 setup, operation, recovery and evidence guide at `docs/platform/C3-Abandoned-Lab.md`.
+- A root setup/inventory guide and read-only host inventory script at `scripts/testing/member1-platform-check.sh`.
+- C6 VM notes at `docs/platform/C6-CURE-Research-Server.md`.
+
+Run C3 unit tests from the C3 directory with Flask/Gunicorn dependencies installed:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+python -m unittest discover -s tests -v
+```
+
+Run the read-only platform inventory from the repository root:
+
+```bash
+bash scripts/testing/member1-platform-check.sh
+```
+
+These source changes and test definitions have been committed to the Member 1 branch. They have not been executed on the live Ubuntu host in this review. Live CTFd submissions, firewall isolation, clean deployment, reset/recovery, logging and resource tests remain pending until the team runs them and records evidence.
