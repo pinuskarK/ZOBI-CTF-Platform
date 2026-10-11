@@ -10,6 +10,8 @@ services:
       C3_FLAG: ${C3_FLAG:?Set C3_FLAG in the local .env file}
       FLASK_SECRET_KEY: ${FLASK_SECRET_KEY:?Set FLASK_SECRET_KEY in the local .env file}
       C3_DB_PATH: /app/data/research.db
+      C3_DEMO_USERNAME: ${C3_DEMO_USERNAME:-researcher}
+      C3_DEMO_PASSWORD: ${C3_DEMO_PASSWORD:?Set C3_DEMO_PASSWORD in the local .env file}
     volumes:
       - c3_data:/app/data
     networks:
