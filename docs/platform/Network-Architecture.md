@@ -63,7 +63,8 @@ containerized challenge environments.
 - Driver: bridge
 - Subnet: 172.20.0.0/24
 - Gateway: 172.20.0.1
-- C3 service is defined to attach to this network; confirm current attachment with `docker network inspect zobi_challenges` before the demo.
+- Clean setup should create this bridge with Docker's `--internal` option.
+- C3 service is defined to attach to this network; confirm its actual Internal value and container attachment with `docker network inspect zobi_challenges` before the demo.
 
 The challenge network is intended to remain separate from the CTFd participant-facing
 network (`ctfd_default`) and the CTFd internal network (`ctfd_internal`). Inspect the live network and container attachments before claiming the separation is enforced.
@@ -138,6 +139,7 @@ Completed:
 
 Next:
 
+- Verify whether the existing zobi_challenges network is marked Internal; the setup helper deliberately stops if an existing network is not internal, rather than deleting an active network.
 - Verify the C3 container's actual network attachment and host binding
 - Implement/verify challenge-environment isolation
 - Configure required ports
