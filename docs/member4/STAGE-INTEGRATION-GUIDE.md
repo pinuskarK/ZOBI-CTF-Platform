@@ -1,6 +1,6 @@
 # Member 4 — Stage Integration Guide
 
-This guide describes how the completed stage artefacts are laid out in this branch, how the services fit together, and what Member 4 must verify before the demonstration. C5 is deliberately marked unfinished; its files and completion claims are not included as finished work.
+This guide describes how stage artefacts are laid out in this branch, how the services fit together, and what Member 4 must verify before the demonstration. C5's PCAP and build materials are now integrated; live CTFd validation and the C5-to-C6 handoff remain pending.
 
 ## 1. Current repository artefacts
 
@@ -90,9 +90,9 @@ Member 4 checks:
 
 ### C5 — Network analysis
 
-**Status: NOT FINISHED.**
+**Status: artefacts integrated; live acceptance pending.**
 
-The intended role of C5 is to analyse a network capture and reveal only the connection details needed to proceed to C6. This branch intentionally does not treat C5 as complete and does not include the unfinished PCAP as a completed challenge.
+The intended role of C5 is to analyse a network capture and reveal only the connection details needed to proceed to C6. The PCAP, generator, organiser transmission source and expected-answer file are available under challenges/C5-networking/. The artefact is present, but that does not prove the CTFd attachment, correct/incorrect flag handling or C5-to-C6 handoff passed.
 
 Before integration can be accepted:
 - Finish and review the PCAP artefact.
@@ -117,7 +117,7 @@ Member 4 checks:
 - The VM and isolated network are running.
 - The intended task is solvable with the intended user permissions.
 - The challenge result is accepted by CTFd.
-- The final handoff from C5 is tested after C5 is complete.
+- The final handoff from C5 is tested after C5's live attachment and handoff tests pass.
 - VM reset/recovery returns the environment to the documented baseline.
 
 ## 2. Central services and network
@@ -156,7 +156,7 @@ The smoke test checks HTTP reachability only. It does not prove challenge correc
 - [ ] Demonstrate C2 decoding and the resulting clue.
 - [ ] Demonstrate C3 container health and the intended vulnerable web challenge.
 - [ ] Demonstrate C4 analysis using all five evidence files.
-- [ ] State clearly that C5 is still under development; do not stage a fake completion.
+- [ ] Show the integrated PCAP and its intended analysis path, but distinguish repository checks from live CTFd acceptance.
 - [ ] Demonstrate C6 separately as a completed challenge, while explaining that its participant handoff depends on C5.
 - [ ] Show accepted and rejected submissions using safe test values.
 - [ ] Show service/network isolation and the real recovery procedure.
@@ -179,4 +179,4 @@ For each run, save a timestamped screenshot or text log and record:
 | Evidence path | Relative path under the team's approved evidence folder |
 | Defect/fix | Issue ID and fixing commit if applicable |
 
-Do not mark the whole platform as end-to-end complete while C5 remains unfinished.
+Do not mark the whole platform as end-to-end complete while C5 artefacts are integrated; live acceptance remains pending.
