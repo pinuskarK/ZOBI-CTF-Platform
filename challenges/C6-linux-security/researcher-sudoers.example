@@ -1,0 +1,5 @@
+# EXAMPLE ONLY — install only in the disposable, isolated ZOBI C6 VM.
+# Review with: visudo -cf /etc/sudoers.d/zobi-c6-researcher
+# This deliberately permits environment/PATH control for one root-owned script.
+# Never install this policy on a real, shared, or production system.
+researcher ALL=(root) NOPASSWD: SETENV: /opt/zobi-c6/backup.sh
